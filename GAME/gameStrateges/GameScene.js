@@ -10,9 +10,7 @@ window.GameScene = (function (window) {
 	class GameScene {
 		constructor(canvas) {
 			console.log('GameScene.fn');
-
 			this.canvas = canvas;
-			console.log(this.canvas);
 			this.ctx = this.canvas.getContext('2d');
 			this.fieldSize = 1;
 
@@ -35,8 +33,6 @@ window.GameScene = (function (window) {
       this.canvas.width = this.canvas.dwidth;
     }
 		setState(state) {
-			console.log(`GameScene.fn.setState`, state);
-
 			this.state = state;
 		}
 
@@ -50,19 +46,12 @@ window.GameScene = (function (window) {
       }.bind(this)
 
 			// Отрисовка Баз
-			// Чужая
+			// Моя
       const plate = new Image();
       plate.src = 'images/plate.gif';
       plate.onload = function() {
         ctx.drawImage(plate,0 ,this.canvas.height*2/5 , this.canvas.height/5,this.canvas.height/5);  //x,y,width,height
       }.bind(this)
-
-      // Моя
-      // const plate = new Image();
-      // plate.src = 'images/plate.gif';
-      // plate.onload = function() {
-      //   ctx.drawImage(plate,0 ,this.canvas.height*2/5 , this.canvas.height/5,this.canvas.height/5);  //x,y,width,height
-      // }.bind(this)
 
       const man = new Image();
       man.src = 'images/ufo.gif';
@@ -72,7 +61,7 @@ window.GameScene = (function (window) {
 
 
 		}
-    //
+
 		// setNames(me, opponent) {
 		// 	this.players = {me, opponent};
 		// }

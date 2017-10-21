@@ -15,6 +15,7 @@ window.ControllersManager = (function (window) {
 		 * Начинаем слушать события клавиатуры
 		 */
 		init() {
+			console.log("ControllersManager init");
 			document.addEventListener('keydown', this._onPress);
 			document.addEventListener('keyup', this._onUp);
 		}

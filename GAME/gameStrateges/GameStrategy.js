@@ -1,20 +1,16 @@
 window.GameStrategy = (function (window) {
   const EVENTS = window.EVENTS;
   const Mediator = window.Mediator;
-
   const mediator = new Mediator;
 
   class GameStrategy {
     constructor() {
       console.info('Game Strategy create');
-
       if (this.constructor.name === GameStrategy.name) {
         throw new TypeError('Can not create instance of GameStrategy');
       }
-
-      console.log("this.subscribe(EVENTS.WE_ARE_LOGGED_IN, this.onLoggedIn.bind(this));")
-
-      this.subscribe(EVENTS.WE_ARE_LOGGED_IN,this.onLoggedIn.bind(this));//()=>console.error("BAAAAAAAAAAAAAD")
+      // События
+      this.subscribe(EVENTS.WE_ARE_LOGGED_IN,this.onLoggedIn.bind(this));
       this.subscribe(EVENTS.NEXT_STEP_CONTROLS_PRESSED, this.onNewCommand.bind(this));
 
       this.me = null;
@@ -31,7 +27,6 @@ window.GameStrategy = (function (window) {
       console.info('GameStrategy onNewCommand', arguments);
       throw new TypeError('Not implemented');
     }
-
 
     fireGameOver(message) {
       console.info('GameStrategy fireGameOver', arguments);

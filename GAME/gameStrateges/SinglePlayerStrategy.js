@@ -43,45 +43,46 @@ window.SinglePlayerStrategy = (function (window) {
 
 			this.startGameLoop();
 		}
-    //
-		// onNewCommand(payload) {
-		// 	console.log('SinglePlayerStrategy.fn.onNewCommand', payload);
-		// 	if (this._pressed('FIRE', payload)) {
-		// 		const bullet = {
-		// 			x: this.state.me.xpos,
-		// 			y: this.state.me.ypos + 1,
-		// 			dir: 'up'
-		// 		};
-		// 		this.state.bullets.push(bullet);
-		// 		return;
-		// 	}
-		// 	if (this._pressed('LEFT', payload)) {
-		// 		if (this.state.me.xpos > 1) {
-		// 			this.state.me.xpos--;
-		// 		}
-		// 		return;
-		// 	}
-		// 	if (this._pressed('RIGHT', payload)) {
-		// 		if (this.state.me.xpos < 18) {
-		// 			this.state.me.xpos++;
-		// 		}
-		// 		return;
-		// 	}
-		// 	if (this._pressed('UP', payload)) {
-		// 		if (this.state.me.ypos < 6) {
-		// 			this.state.me.ypos++;
-		// 		}
-		// 		return;
-		// 	}
-		// 	if (this._pressed('DOWN', payload)) {
-		// 		if (this.state.me.ypos > 1) {
-		// 			this.state.me.ypos--;
-		// 		}
-		// 		return;
-		// 	}
-    //
-		// }
-    //
+
+		onNewCommand(payload) {
+			console.log('SinglePlayerStrategy.fn.onNewCommand', payload);
+			console.log(payload);
+			// if (this._pressed('FIRE', payload)) {
+			// 	const bullet = {
+			// 		x: this.state.me.xpos,
+			// 		y: this.state.me.ypos + 1,
+			// 		dir: 'up'
+			// 	};
+			// 	this.state.bullets.push(bullet);
+			// 	return;
+			// }
+			// if (this._pressed('LEFT', payload)) {
+			// 	if (this.state.me.xpos > 1) {
+			// 		this.state.me.xpos--;
+			// 	}
+			// 	return;
+			// }
+			// if (this._pressed('RIGHT', payload)) {
+			// 	if (this.state.me.xpos < 18) {
+			// 		this.state.me.xpos++;
+			// 	}
+			// 	return;
+			// }
+			// if (this._pressed('UP', payload)) {
+			// 	if (this.state.me.ypos < 6) {
+			// 		this.state.me.ypos++;
+			// 	}
+			// 	return;
+			// }
+			// if (this._pressed('DOWN', payload)) {
+			// 	if (this.state.me.ypos > 1) {
+			// 		this.state.me.ypos--;
+			// 	}
+			// 	return;
+			// }
+
+		}
+
 		gameLoop() {
 			console.log("hello");
 			// Это пули (управление)

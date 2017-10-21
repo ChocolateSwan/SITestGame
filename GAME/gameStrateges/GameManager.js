@@ -50,6 +50,7 @@ window.GameManager = (function (window) {
 		gameLoop() {
 			const controlsUpdates = this.controllers.diff();
 
+
 			if (Object.keys(controlsUpdates).some(k => controlsUpdates[k])) {
 				mediator.emit(EVENTS.NEXT_STEP_CONTROLS_PRESSED, controlsUpdates);
 			}
