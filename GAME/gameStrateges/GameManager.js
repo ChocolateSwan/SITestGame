@@ -19,7 +19,7 @@ window.GameManager = (function (window) {
 			// this.subscribe(EVENTS.WAITING_FOR_OPPONENT, 'onWaitOpponent');
 			// this.subscribe(EVENTS.SETUP_OPPONENTS, 'onFindOpponent');
 			this.subscribe(EVENTS.START_THE_GAME, this.onStart.bind(this));
-			// this.subscribe(EVENTS.SET_NEW_GAME_STATE,);
+			this.subscribe(EVENTS.SET_NEW_GAME_STATE, this.onNewState.bind(this));
 			// this.subscribe(EVENTS.FINISH_THE_GAME, 'onFinishTheGame');
       //
 			console.log("mediator.emit(EVENTS.WE_ARE_LOGGED_IN, {username})", username)

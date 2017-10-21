@@ -8,16 +8,13 @@ window.Game = (function (window) {
 	class Game {
 
 		constructor(Strategy, username, canvas) {
-			console.log('Game.fn');
 			if (!(Strategy.prototype instanceof GameStrategy)) {
 				throw new TypeError('Strategy is not a GameStrategy');
 			}
 			this.username = username;
 			this.canvas = canvas;
-
 			this.manager = new GameManager(this.username, this.canvas, Strategy);
 		}
-
 		destroy() {
 			this.manager.destroy();
 			this.manager = null;

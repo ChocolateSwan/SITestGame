@@ -45,13 +45,11 @@ window.GameStrategy = (function (window) {
     }
 
     fireSetNewGameState(state) {
-      console.log('GameStrategy.fn.fireSetNewGameState', arguments);
       mediator.emit(EVENTS.SET_NEW_GAME_STATE, {state});
     }
 
 
     subscribe(event, func) {
-      // this._subscribed.push({name: event, callback: callbackName});
       mediator.on(event, func);
     }
 

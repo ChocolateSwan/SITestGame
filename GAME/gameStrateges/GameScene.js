@@ -1,7 +1,7 @@
 window.GameScene = (function (window) {
 	const Mediator = window.Mediator;
 
-  const HDim = 10;
+  const HDim = 20; //10
   const WDim = 20;
   const AR = HDim / WDim;
   const userspace = 8;
@@ -55,9 +55,40 @@ window.GameScene = (function (window) {
 
       const man = new Image();
       man.src = 'images/ufo.gif';
-      man.onload = function() {
-        ctx.drawImage(man,this.canvas.width/2 ,this.canvas.height/2 , this.canvas.width/7,this.canvas.height/5);  //x,y,width,height
-      }.bind(this)
+      if (this.state.me){
+        man.onload = function() {
+          ctx.drawImage(man, this.state.me.x_position ,this.state.me.y_position, this.canvas.width/7,this.canvas.height/5);  //x,y,width,height
+        }.bind(this)
+			}
+
+
+			// console.log(this.state.opponent.y_position)
+			if (this.state.opponent ){
+        this.state.opponent.towers.forEach(tower=>{
+          let towerImage = new Image();
+          towerImage.src = 'images/towel.png';
+          towerImage.onload = function() {
+            ctx.drawImage(towerImage, tower.x_position ,tower.y_position, this.canvas.width/7,this.canvas.height/5);  //x,y,width,height
+          }.bind(this)
+        })
+			}
+
+			// console.log(this.state);
+
+			if (this.state.bullets) {
+        this.state.bullets.forEach(blt => {
+        	let bltImage = new Image ();
+          bltImage.src = 'images/пуля.png';
+          ctx.drawImage(bltImage, blt.x_position ,blt.y_position, this.canvas.width/7,this.canvas.height/5);
+
+
+
+
+        });
+      }
+
+
+
 
 
 		}

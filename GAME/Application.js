@@ -41,7 +41,6 @@ window.Application = (function (window) {
 
 
 		onGreet(payload) {
-			console.log(`Application.fn.onGreet`, payload);
 			const gamemode = (payload.mode || '').toUpperCase();
 			const username = (payload.username || '').toUpperCase();
 			if (gamemode && STRATEGIES[gamemode]) {
@@ -58,7 +57,6 @@ window.Application = (function (window) {
 		}
     //
 		subscribe(event, callback) {
-			// this._subscribed.push({name: event, callback: callbackName});
 			mediator.on(event, callback);
 		}
     //

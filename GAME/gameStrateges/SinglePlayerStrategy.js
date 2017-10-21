@@ -29,24 +29,34 @@ window.SinglePlayerStrategy = (function (window) {
 			this.state = {
 				bullets: [],
 				me: {
-					xpos: 1,
-					ypos: 1,
-					hp: 10
+					x_position: 500,
+					y_position: 500,
+					healthOfBase: 100,
+					healthOfUnit: 50,
+					towers:[],
 				},
 				opponent: {
-					xpos: 18,
-					ypos: 32,
-					hp: 10,
-					cooldown: 10
+					x_position: 18,
+					y_position: 32,
+					healthOfBase: 100,
+					healthOfUnit: 50,
+					towers:[
+						{ x_position: 10,
+							y_position: 200,
+							coolDown: 1,
+
+						}
+					],
 				}
 			};
-
+      this.fireSetNewGameState(this.state);
 			this.startGameLoop();
 		}
 
 		onNewCommand(payload) {
 			console.log('SinglePlayerStrategy.fn.onNewCommand', payload);
-			console.log(payload);
+			// console.log(payload);
+
 			// if (this._pressed('FIRE', payload)) {
 			// 	const bullet = {
 			// 		x: this.state.me.xpos,
@@ -56,101 +66,99 @@ window.SinglePlayerStrategy = (function (window) {
 			// 	this.state.bullets.push(bullet);
 			// 	return;
 			// }
-			// if (this._pressed('LEFT', payload)) {
-			// 	if (this.state.me.xpos > 1) {
-			// 		this.state.me.xpos--;
-			// 	}
-			// 	return;
-			// }
-			// if (this._pressed('RIGHT', payload)) {
-			// 	if (this.state.me.xpos < 18) {
-			// 		this.state.me.xpos++;
-			// 	}
-			// 	return;
-			// }
-			// if (this._pressed('UP', payload)) {
-			// 	if (this.state.me.ypos < 6) {
-			// 		this.state.me.ypos++;
-			// 	}
-			// 	return;
-			// }
-			// if (this._pressed('DOWN', payload)) {
-			// 	if (this.state.me.ypos > 1) {
-			// 		this.state.me.ypos--;
-			// 	}
-			// 	return;
-			// }
+			if (this._pressed('LEFT', payload)) {
+				// if (this.state.me.xpos <100) {
+					this.state.me.xpos-=20;
+				// }
+				return;
+			}
+			if (this._pressed('RIGHT', payload)) {
+				// if (this.state.me.xpos >1) {
+					this.state.me.xpos += 20;
+				// }
+				return;
+			}
+			if (this._pressed('UP', payload)) {
+				if (this.state.me.y_position > 6) {
+					this.state.me.y_position-=20;
+				}
+				return;
+			}
+			if (this._pressed('DOWN', payload)) {
+				if (this.state.me.y_position >1) {
+					this.state.me.y_position+=20;
+				}
+				return;
+			}
 
 		}
 
 		gameLoop() {
 			console.log("hello");
 			// Это пули (управление)
-			// if (this.state && this.state.bullets) {
-			// 	this.state.bullets = this.state.bullets.map(blt => {
-			// 		switch (blt.dir) {
-			// 			case 'down': {
-			// 				blt.y--;
-			// 				if (Math.abs(this.state.me.xpos - blt.x) <= 1) {
-			// 					if (Math.abs(this.state.me.ypos - blt.y) <= 1) {
-			// 						this.state.me.hp--;
-			// 						return null;
-			// 					}
-			// 				}
-			// 				break;
-			// 			}
-			// 			case 'up': {
-			// 				blt.y++;
-			// 				if (Math.abs(this.state.opponent.xpos - blt.x) <= 1) {
-			// 					if (Math.abs(this.state.opponent.ypos - blt.y) <= 1) {
-			// 						this.state.opponent.hp--;
-			// 						return null;
-			// 					}
-			// 				}
-			// 				break;
-			// 			}
-			// 		}
-			// 		if (blt.y > 33 || blt.y < 0) {
-			// 			return null;
-			// 		}
-			// 		return blt;
-			// 	});
-			// 	this.state.bullets = this.state.bullets.filter(blt => blt);
-			// }
+			if (this.state && this.state.bullets) {
+				this.state.bullets = this.state.bullets.map(blt => {
+					switch (blt.dir) {
+						case 'right': {
+							blt.x_position += 50;
+							// if (Math.abs(this.state.me.xpos - blt.x) <= 1) {
+							// 	if (Math.abs(this.state.me.ypos - blt.y) <= 1) {
+							// 		this.state.me.hp--;
+							// 		return null;
+							// 	}
+							// }
+							break;
+						}
+						case 'up': {
+							blt.y++;
+							if (Math.abs(this.state.opponent.xpos - blt.x) <= 1) {
+								if (Math.abs(this.state.opponent.ypos - blt.y) <= 1) {
+									this.state.opponent.hp--;
+									return null;
+								}
+							}
+							break;
+						}
+					}
+					if (blt.y > 1000 || blt.y < 0) {
+						return null;
+					}
+					return blt;
+				});
+				// this.state.bullets = this.state.bullets.filter(blt => blt);
+			}
 
-			if (this.state.me.hp <= 0) {
+			if (this.state.me.healthOfBase <= 0) {
 				return this.fireGameOver(`Игра окончена, вы проиграли (${this.me}:${this.state.me.hp} / ${this.opponent}:${this.state.opponent.hp})`);
 			}
 
-			if (this.state.opponent.hp <= 0) {
+			if (this.state.opponent.healthOfBase <= 0) {
 				return this.fireGameOver(`Игра окончена, вы победили (${this.me}:${this.state.me.hp} / ${this.opponent}:${this.state.opponent.hp})`);
 			}
 
-			// if (this.state.opponent.cooldown > 0) {
-			// 	this.state.opponent.cooldown--;
-			// } else {
-			// 	this.state.opponent.xpos = this.state.me.xpos;
-			// 	this.state.bullets.push({
-			// 		x: this.state.opponent.xpos,
-			// 		y: this.state.opponent.ypos,
-			// 		dir: 'down'
-			// 	}, {
-			// 		x: this.state.opponent.xpos,
-			// 		y: this.state.opponent.ypos - 1,
-			// 		dir: 'down'
-			// 	}, {
-			// 		x: this.state.opponent.xpos,
-			// 		y: this.state.opponent.ypos + 1,
-			// 		dir: 'down'
-			// 	});
-			// 	this.state.opponent.cooldown = 10;
-			// }
+			this.state.opponent.towers.forEach(towel => {
+				if (towel.coolDown > 0) {
+					console.log("bullet down");
+					towel.coolDown -- ;
+				} else {
+					console.log("bullet");
+					this.state.bullets.push(
+						{
+              x_position: towel.x_position,
+              y_position: towel.y_position,
+              dir: 'right'
+						}
+					)
+					towel.coolDown = 10;
+				}
+
+			})
 
 			this.fireSetNewGameState(this.state);
 		}
 
     startGameLoop() {
-			this.interval = setInterval(() => this.gameLoop(), 1000);
+			this.interval = setInterval(() => this.gameLoop(), 500);
     }
     //
 		// stopGameLoop() {
@@ -159,9 +167,9 @@ window.SinglePlayerStrategy = (function (window) {
 		// 	}
 		// }
     //
-		// _pressed(name, data) {
-		// 	return KEYS[name].some(k => data[k.toLowerCase()]);
-		// }
+		_pressed(name, data) {
+			return KEYS[name].some(k => data[k.toLowerCase()]);
+		}
     //
 		// destroy() {
 		// 	super.destroy();
