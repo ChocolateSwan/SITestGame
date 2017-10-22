@@ -65,13 +65,15 @@ window.SinglePlayerStrategy = (function (window) {
 
 					switch (blt.direction) {
 						case 'RIGHT': {
+							// console.error("+100");
 							blt.x_position += 100;
-							// if (Math.abs(this.state.me.xpos - blt.x) <= 1) {
-							// 	if (Math.abs(this.state.me.ypos - blt.y) <= 1) {
-							// 		this.state.me.hp--;
-							// 		return null;
-							// 	}
-							// }
+							if (Math.abs(this.state.me.man.x_position - blt.x_position) <= 200) {
+								if (Math.abs(this.state.me.man.y_position - blt.y_position) <= 200) {
+									this.state.me.man.health -= 10;
+									console.error("Our health = ", this.state.me.man.health);
+									return null;
+								}
+							}
 							break;
 						}
 						case 'LEFT': {
@@ -91,12 +93,13 @@ window.SinglePlayerStrategy = (function (window) {
 					}
 					return blt;
 				});
-				// this.state.bullets = this.state.bullets.filter(blt => blt);
+				this.state.bullets = this.state.bullets.filter(blt => blt);
 			}
 
-			// if (this.state.me.healthOfBase <= 0) {
-			// 	return this.fireGameOver(`Игра окончена, вы проиграли (${this.me}:${this.state.me.hp} / ${this.opponent}:${this.state.opponent.hp})`);
-			// }
+			if (this.state.me.man.health <= 0) {
+				alert ("Вы проиграли!!!!!!");
+				// return this.fireGameOver(`Игра окончена, вы проиграли (${this.me}:${this.state.me.hp} / ${this.opponent}:${this.state.opponent.hp})`);
+			}
       //
 			// if (this.state.opponent.healthOfBase <= 0) {
 			// 	return this.fireGameOver(`Игра окончена, вы победили (${this.me}:${this.state.me.hp} / ${this.opponent}:${this.state.opponent.hp})`);
