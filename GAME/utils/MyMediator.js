@@ -33,8 +33,8 @@ window.Mediator = (function (window) {
      */
     // TODO wtf payload
     emit(eventName, payload = null) {
-      console.log(payload)
-      console.info('Mediator emit', arguments);
+      // console.log(payload)
+      // console.info('Mediator emit', arguments);
       this.__emitter.emit(eventName, payload);
     }
 

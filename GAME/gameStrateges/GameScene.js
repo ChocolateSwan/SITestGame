@@ -73,6 +73,7 @@ window.GameScene = (function (window) {
 
       if (this.state.opponent){
         this.state.opponent.towers.forEach(tower=>{
+            // console.log(tower.image);
             ctx.drawImage(tower.image,
               tower.x_position ,
               tower.y_position,
@@ -84,13 +85,7 @@ window.GameScene = (function (window) {
 
 			if (this.state.bullets) {
         this.state.bullets.forEach(blt => {
-        	let bltImage = new Image ();
-          bltImage.src = 'images/пуля.png';
-          ctx.drawImage(bltImage, blt.x_position ,blt.y_position, this.canvas.width/7,this.canvas.height/5);
-
-
-
-
+          ctx.drawImage(blt.image, blt.x_position ,blt.y_position, this.canvas.width/16,this.canvas.height/16 );
         });
       }
 

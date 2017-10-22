@@ -4,6 +4,7 @@ window.Player = (function (window) {
   const  {Tower} = window
   const  {Man} = window
   const  {Base} = window
+  const {Bullet} = window
 
 
   class Player {
@@ -27,7 +28,17 @@ window.Player = (function (window) {
       if (direction === "LEFT"){
         this.man.goLeft();
       }
+
     }
+
+
+    fireMan(){
+      return new Bullet (this.man.direction,
+        this.man.x_position,
+        this.man.y_position)
+
+    }
+
 
   }
   return Player;

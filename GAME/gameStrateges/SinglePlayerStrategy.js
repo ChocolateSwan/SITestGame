@@ -39,17 +39,10 @@ window.SinglePlayerStrategy = (function (window) {
 		}
 
 		onNewCommand(payload) {
-			console.log('SinglePlayerStrategy.fn.onNewCommand', payload);
-
-			// if (this._pressed('FIRE', payload)) {
-			// 	const bullet = {
-			// 		x: this.state.me.xpos,
-			// 		y: this.state.me.ypos + 1,
-			// 		dir: 'up'
-			// 	};
-			// 	this.state.bullets.push(bullet);
-			// 	return;
-			// }
+			if (this._pressed('FIRE', payload)) {
+				this.state.bullets.push(this.state.me.fireMan());
+				return;
+			}
 			if (this._pressed('LEFT', payload)) {
 				this.state.me.moveMan('LEFT');
 			}
@@ -66,9 +59,11 @@ window.SinglePlayerStrategy = (function (window) {
 
 		gameLoop() {
 			// Это пули (управление)
+
 			if (this.state && this.state.bullets) {
 				this.state.bullets = this.state.bullets.map(blt => {
-					switch (blt.dir) {
+
+					switch (blt.direction) {
 						case 'RIGHT': {
 							blt.x_position += 100;
 							// if (Math.abs(this.state.me.xpos - blt.x) <= 1) {
@@ -79,15 +74,16 @@ window.SinglePlayerStrategy = (function (window) {
 							// }
 							break;
 						}
-						case 'up': {
-							blt.y++;
-							if (Math.abs(this.state.opponent.xpos - blt.x) <= 1) {
-								if (Math.abs(this.state.opponent.ypos - blt.y) <= 1) {
-									this.state.opponent.hp--;
-									return null;
-								}
-							}
-							break;
+						case 'LEFT': {
+              blt.x_position -= 100;
+							// blt.y++;
+							// if (Math.abs(this.state.opponent.xpos - blt.x) <= 1) {
+							// 	if (Math.abs(this.state.opponent.ypos - blt.y) <= 1) {
+							// 		this.state.opponent.hp--;
+							// 		return null;
+							// 	}
+							// }
+							// break;
 						}
 					}
 					if (blt.y > 1000 || blt.y < 0) {
@@ -111,13 +107,11 @@ window.SinglePlayerStrategy = (function (window) {
 					towel.coolDown -- ;
 				} else {
 					this.state.bullets.push(
-						{
-              x_position: towel.x_position,
-              y_position: towel.y_position,
-              dir: 'RIGHT'
-						}
+               new Bullet ("RIGHT",
+                towel.x_position,
+                towel.y_position),
 					)
-					towel.coolDown = 2;
+					towel.coolDown = 4;
 				}
 
 			})
@@ -126,7 +120,7 @@ window.SinglePlayerStrategy = (function (window) {
 		}
 
     startGameLoop() {
-			this.interval = setInterval(() => this.gameLoop(), 5000);
+			this.interval = setInterval(() => this.gameLoop(), 500);
     }
     //
 		// stopGameLoop() {

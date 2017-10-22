@@ -6,10 +6,10 @@ window.Base = (function (window) {
     constructor (health = 100,
                  x_position,
                  y_position) {
-      super(x_position, y_position, "../images/plate.gif");
+      super(x_position, y_position, "images/plate.gif");
       this.health  = health;
 
     }
   }
-  return Tower;
+  return Base;
 })(window);

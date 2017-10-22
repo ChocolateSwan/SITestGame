@@ -34,7 +34,12 @@ window.ControllersManager = (function (window) {
 			});
 
 			const clicked = allkeys.reduce((res, key) => {
-				res[key] = this.previous[key] || this.keys[key]; //res[key] = !this.previous[key] && this.keys[key];
+				if (key === "enter" || key ===" "){
+          res[key] = !this.previous[key] && this.keys[key]
+				}
+				else{
+          res[key] = this.previous[key] || this.keys[key];//res[key] = !this.previous[key] && this.keys[key];
+				}
 				return res;
 			}, {});
 

@@ -10,6 +10,7 @@ window.Man = (function (window) {
                  y_position) {
       super(x_position, y_position, "images/ufo.gif");
       this.health= health;
+      this.direction = "LEFT";
     }
 
 // TODO ограничения
@@ -23,10 +24,12 @@ window.Man = (function (window) {
 
     goRight(){
       this.x_position += SPEED;
+      this.direction = "RIGHT";
     }
 
     goLeft(){
       this.x_position -= SPEED;
+      this.direction = "LEFT";
     }
 
 

@@ -19,9 +19,9 @@ window.Emitter = (function () {
     // Событие
     // TODO use data
     emit (eventName, data) {
-      console.log("Emittor emit");
+      // console.log("Emittor emit");
       const event = this.__events[eventName];
-      console.log(eventName);
+      // console.log(eventName);
       if (event) {
         event.forEach(fn => {
           fn.call(null, data);
