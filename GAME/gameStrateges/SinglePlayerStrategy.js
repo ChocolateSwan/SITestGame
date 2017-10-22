@@ -1,6 +1,7 @@
 window.SinglePlayerStrategy = (function (window) {
 	const Mediator = window.Mediator;
 	const GameStrategy = window.GameStrategy;
+	const {Player} = window;
 
 	const mediator = new Mediator;
 
@@ -28,13 +29,7 @@ window.SinglePlayerStrategy = (function (window) {
 			this.fireStartGame();
 			this.state = {
 				bullets: [],
-				me: {
-					x_position: 500,
-					y_position: 500,
-					healthOfBase: 100,
-					healthOfUnit: 50,
-					towers:[],
-				},
+				me: new Player(10,10,100,2000,100,50),
 				opponent: {
 					x_position: 18,
 					y_position: 32,
@@ -158,7 +153,7 @@ window.SinglePlayerStrategy = (function (window) {
 		}
 
     startGameLoop() {
-			this.interval = setInterval(() => this.gameLoop(), 500);
+			this.interval = setInterval(() => this.gameLoop(), 5000);
     }
     //
 		// stopGameLoop() {

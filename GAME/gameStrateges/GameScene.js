@@ -53,13 +53,20 @@ window.GameScene = (function (window) {
         ctx.drawImage(plate,0 ,this.canvas.height*2/5 , this.canvas.height/5,this.canvas.height/5);  //x,y,width,height
       }.bind(this)
 
-      const man = new Image();
-      man.src = 'images/ufo.gif';
+
       if (this.state.me){
-        man.onload = function() {
-          ctx.drawImage(man, this.state.me.x_position ,this.state.me.y_position, this.canvas.width/7,this.canvas.height/5);  //x,y,width,height
-        }.bind(this)
-			}
+        ctx.drawImage(this.state.me.man.image,
+          this.state.me.man.x_position ,
+          this.state.me.man.y_position, this.canvas.width/7,this.canvas.height/5);
+
+      }
+      // const man = new Image();
+      // man.src = 'images/ufo.gif';
+      // if (this.state.me){
+       //  man.onload = function() {
+       //    ctx.drawImage(man, this.state.me.x_position ,this.state.me.y_position, this.canvas.width/7,this.canvas.height/5);  //x,y,width,height
+       //  }.bind(this)
+			// }
 
 
 			// console.log(this.state.opponent.y_position)
