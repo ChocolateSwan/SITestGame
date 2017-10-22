@@ -1,7 +1,7 @@
 window.GameScene = (function (window) {
 	const Mediator = window.Mediator;
 
-  const HDim = 20; //10
+  const HDim = 15; //10
   const WDim = 20;
   const AR = HDim / WDim;
   const userspace = 8;
@@ -40,7 +40,7 @@ window.GameScene = (function (window) {
 			const ctx = this.ctx;
 			// Отрисовка фона
       const moonSerface = new Image();
-      moonSerface.src    = 'images/moon_face.jpeg';
+      moonSerface.src    = 'images/moon_face.jpg';
       moonSerface.onload = function() {
         ctx.drawImage(moonSerface, 0, 0, this.canvas.width,this.canvas.height);  //x,y,width,height
       }.bind(this)
@@ -57,30 +57,30 @@ window.GameScene = (function (window) {
       if (this.state.me){
         ctx.drawImage(this.state.me.man.image,
           this.state.me.man.x_position ,
-          this.state.me.man.y_position, this.canvas.width/7,this.canvas.height/5);
+          this.state.me.man.y_position,
+          this.canvas.width/7,
+          this.canvas.height/5);
 
       }
-      // const man = new Image();
-      // man.src = 'images/ufo.gif';
-      // if (this.state.me){
-       //  man.onload = function() {
-       //    ctx.drawImage(man, this.state.me.x_position ,this.state.me.y_position, this.canvas.width/7,this.canvas.height/5);  //x,y,width,height
-       //  }.bind(this)
-			// }
 
+      if (this.state.opponent){
+        ctx.drawImage(this.state.opponent.man.image,
+          this.state.opponent.man.x_position ,
+          this.state.opponent.man.y_position,
+          this.canvas.width/7,
+          this.canvas.height/5);
+      }
 
-			// console.log(this.state.opponent.y_position)
-			if (this.state.opponent ){
+      if (this.state.opponent){
         this.state.opponent.towers.forEach(tower=>{
-          let towerImage = new Image();
-          towerImage.src = 'images/towel.png';
-          towerImage.onload = function() {
-            ctx.drawImage(towerImage, tower.x_position ,tower.y_position, this.canvas.width/7,this.canvas.height/5);  //x,y,width,height
-          }.bind(this)
+            ctx.drawImage(tower.image,
+              tower.x_position ,
+              tower.y_position,
+              this.canvas.width/7,
+              this.canvas.height/5);
         })
-			}
+      }
 
-			// console.log(this.state);
 
 			if (this.state.bullets) {
         this.state.bullets.forEach(blt => {
