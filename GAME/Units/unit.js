@@ -4,7 +4,7 @@ window.Unit = (function () {
   class Unit  {
     constructor (x_position,
                  y_position,
-                 type) {
+                 type, width, height) {
       // if (this.constructor.name === Unit.name) {
       //   throw new TypeError('Can not create instance of Unit');
       // }
@@ -12,6 +12,8 @@ window.Unit = (function () {
       this.y_position = y_position;
       this.image = new Image ();
       this.image.src = type;
+      this.width = width;
+      this.height = height;
     }
   }
   return Unit;

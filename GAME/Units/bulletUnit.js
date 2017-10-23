@@ -6,7 +6,7 @@ window.Bullet = (function (window) {
     constructor (direction,
                  x_position,
                  y_position) {
-      super(x_position, y_position, "images/bullet.png");
+      super(x_position, y_position, "images/bullet.png",25,25);
       this.direction = direction;
 
     }

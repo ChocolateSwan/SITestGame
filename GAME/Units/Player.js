@@ -33,9 +33,16 @@ window.Player = (function (window) {
 
 
     fireMan(){
-      return new Bullet (this.man.direction,
-        this.man.x_position,
-        this.man.y_position)
+      if (this.man.direction === "LEFT"){
+        return new Bullet (this.man.direction,
+          this.man.x_position,
+          this.man.y_position + this.man.height/2 + 1)
+      } else {
+        return new Bullet (this.man.direction,
+          this.man.x_position + this.man.width +1,
+          this.man.y_position + this.man.height/2 + 1)
+      }
+
 
     }
 
