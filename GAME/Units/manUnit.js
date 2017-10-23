@@ -1,6 +1,13 @@
 window.Man = (function (window) {
 
-  const  {Unit} = window
+  const MAN_IMAGE_PATH = "images/alien.png"
+  const MAN_WIDTH = 50;
+  const MAN_HEIGHT = 50;
+
+  const LEFT = "LEFT";
+  const RIGHT = "RIGHT";
+
+  const  {Unit} = window;
 
   const modelWidth = 960;
   const modelHeight = 640;
@@ -8,12 +15,14 @@ window.Man = (function (window) {
   const SPEED = 5;
 
   class Man extends  Unit {
-    constructor (health = 50,
-                 x_position,
-                 y_position) {
-      super(x_position, y_position, "images/alien.png", 50,50); //images/ufo.gif
+    constructor (health = 50, x_position, y_position = 260) {
+      super(x_position,
+        y_position,
+        MAN_IMAGE_PATH,
+        MAN_WIDTH,
+        MAN_HEIGHT);
       this.health= health;
-      this.direction = "LEFT";
+      this.direction = LEFT;
       this.coolDown = 0;
     }
 
@@ -33,7 +42,7 @@ window.Man = (function (window) {
 
     goRight(){
       this.x_position += SPEED;
-      this.direction = "RIGHT";
+      this.direction = RIGHT;
       if (this.x_position + this.width > modelWidth){
         this.x_position = modelWidth - this.width;
       }
@@ -41,7 +50,7 @@ window.Man = (function (window) {
 
     goLeft(){
       this.x_position -= SPEED;
-      this.direction = "LEFT";
+      this.direction = LEFT;
       if (this.x_position < 0){
         this.x_position = 0;
         }
@@ -50,8 +59,6 @@ window.Man = (function (window) {
     setCoolDown(coolDown){
       this.coolDown = coolDown;
     }
-
   }
-
     return Man;
   })(window);

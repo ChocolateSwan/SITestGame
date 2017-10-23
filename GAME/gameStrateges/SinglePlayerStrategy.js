@@ -1,11 +1,9 @@
 window.SinglePlayerStrategy = (function (window) {
+
 	const Mediator = window.Mediator;
 	const GameStrategy = window.GameStrategy;
 	const {Player} = window;
 	const {Tower} = window;
-
-  const modelWidth = 960;
-  const modelHeight = 640;
 
 	const mediator = new Mediator;
 
@@ -30,10 +28,9 @@ window.SinglePlayerStrategy = (function (window) {
 			this.fireStartGame();
 			this.state = {
 				bullets: [],
-				me: new Player(840,230,100,
-					750,260,50),
-				opponent: new Player(10,230,100,
-					190,260,50),
+
+				me: new Player({baseXpos: 840}, {manXpos:750}),
+				opponent: new Player({baseXpos: 10}, {manXpos:190}),
 			};
 			this.state.opponent.towers.push(new Tower(1, 130, 120));
       this.state.opponent.towers.push(new Tower(1, 130, 400));
@@ -44,7 +41,7 @@ window.SinglePlayerStrategy = (function (window) {
 
 		onNewCommand(payload) {
 			if (this._pressed('FIRE', payload)) {
-				this.state.bullets.push(this.state.me.fireMan());
+				this.state.bullets.push(this.state.me.shootMan());
 				return;
 			}
 			if (this._pressed('LEFT', payload)) {

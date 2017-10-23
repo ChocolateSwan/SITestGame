@@ -1,17 +1,11 @@
 window.Unit = (function () {
-
   // TODO адреса картинок
   class Unit  {
-    constructor (x_position,
-                 y_position,
-                 type, width, height) {
-      // if (this.constructor.name === Unit.name) {
-      //   throw new TypeError('Can not create instance of Unit');
-      // }
+    constructor (x_position, y_position, srcOfImage, width, height) {
       this.x_position = x_position;
       this.y_position = y_position;
       this.image = new Image ();
-      this.image.src = type;
+      this.image.src = srcOfImage;
       this.width = width;
       this.height = height;
     }
