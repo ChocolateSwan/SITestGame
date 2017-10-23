@@ -11,7 +11,8 @@ window.Player = (function (window) {
   const DOWN = "DOWN";
 
   class Player {
-    constructor (baseOptions, manOptions) {
+    constructor (name, baseOptions, manOptions) {
+      this.name = name;
       this.man = new Man(manOptions.manHealth,
         manOptions.manXpos,
         manOptions.manYpos);

@@ -29,8 +29,8 @@ window.SinglePlayerStrategy = (function (window) {
 			this.state = {
 				bullets: [],
 
-				me: new Player({baseXpos: 840}, {manXpos:750}),
-				opponent: new Player({baseXpos: 10}, {manXpos:190}),
+				me: new Player("My name", {baseXpos: 840}, {manXpos:750}),
+				opponent: new Player("Opponent", {baseXpos: 10}, {manXpos:190}),
 			};
 			this.state.opponent.towers.push(new Tower(1, 130, 120));
       this.state.opponent.towers.push(new Tower(1, 130, 400));

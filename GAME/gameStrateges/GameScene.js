@@ -59,6 +59,8 @@ window.GameScene = (function (window) {
 
       this.renderBullets(ctx);
 
+      this.renderText(ctx);
+
 		}
 
 		renderBackground(ctx){
@@ -130,6 +132,35 @@ window.GameScene = (function (window) {
             blt.height*scaleCoeff);
         });
       }
+    }
+
+    renderText(ctx){
+      ctx.shadowColor = "#F00";
+      ctx.font = "italic 30pt Arial";
+      if (this.state.opponent) {
+          ctx.shadowColor = "#F00";
+          ctx.shadowOffsetX = 5;
+          ctx.shadowOffsetY = 5;
+          ctx.shadowBlur = 5;
+          ctx.strokeText(this.state.opponent.name, 20, 50);
+          ctx.strokeText("Base health: " + +(this.state.opponent.base.health), 20, 100);
+          ctx.strokeText("Unit health: " + +(this.state.opponent.man.health), 20, 150);
+      }
+      if (this.state.me) {
+        ctx.shadowColor = "#000dd4";
+        ctx.shadowOffsetX = 5;
+        ctx.shadowOffsetY = 5;
+        ctx.shadowBlur = 5;
+        ctx.strokeText(this.state.me.name, 1100, 50);
+        ctx.strokeText("Base health: " + +(this.state.me.base.health), 1100, 100);
+        ctx.strokeText("Unit health: " + +(this.state.me.man.health), 1100, 150);
+      }
+
+      ctx.shadowColor = "";
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+      ctx.shadowBlur = 0;
+
     }
 
 		// setNames(me, opponent) {

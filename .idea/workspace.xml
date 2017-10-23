@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b4d3a786-c7c1-4970-abbb-2eaf46f9b96c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GAME/Units/Player.js" afterPath="$PROJECT_DIR$/GAME/Units/Player.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GAME/Units/baseUnit.js" afterPath="$PROJECT_DIR$/GAME/Units/baseUnit.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GAME/Units/bulletUnit.js" afterPath="$PROJECT_DIR$/GAME/Units/bulletUnit.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GAME/Units/manUnit.js" afterPath="$PROJECT_DIR$/GAME/Units/manUnit.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GAME/Units/unit.js" afterPath="$PROJECT_DIR$/GAME/Units/unit.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GAME/gameStrateges/GameScene.js" afterPath="$PROJECT_DIR$/GAME/gameStrateges/GameScene.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GAME/gameStrateges/SinglePlayerStrategy.js" afterPath="$PROJECT_DIR$/GAME/gameStrateges/SinglePlayerStrategy.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -21,13 +18,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SinglePlayerStrategy.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SinglePlayerStrategy.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GAME/gameStrateges/SinglePlayerStrategy.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+            <state relative-caret-position="440">
+              <caret line="29" column="20" lean-forward="true" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
               <folding>
-                <marker date="1508758913084" expanded="true" signature="1101:1577" ph="..." />
+                <marker date="1508760005431" expanded="true" signature="1124:1600" ph="..." />
               </folding>
             </state>
           </provider>
@@ -86,18 +83,18 @@
       <file leaf-file-name="Player.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GAME/Units/Player.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+            <state relative-caret-position="308">
+              <caret line="14" column="23" lean-forward="false" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameScene.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GameScene.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GAME/gameStrateges/GameScene.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1672">
-              <caret line="76" column="31" lean-forward="false" selection-start-line="76" selection-start-column="31" selection-end-line="76" selection-end-column="31" />
+            <state relative-caret-position="612">
+              <caret line="161" column="24" lean-forward="false" selection-start-line="161" selection-start-column="24" selection-end-line="161" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -166,14 +163,14 @@
         <option value="$PROJECT_DIR$/GAME/utils/MyEmitter.js" />
         <option value="$PROJECT_DIR$/GAME/ControllersManager.js" />
         <option value="$PROJECT_DIR$/GAME/index.html" />
-        <option value="$PROJECT_DIR$/GAME/gameStrateges/GameScene.js" />
         <option value="$PROJECT_DIR$/GAME/Units/towerUnit.js" />
         <option value="$PROJECT_DIR$/GAME/Units/bulletUnit.js" />
         <option value="$PROJECT_DIR$/GAME/Units/unit.js" />
         <option value="$PROJECT_DIR$/GAME/Units/baseUnit.js" />
-        <option value="$PROJECT_DIR$/GAME/Units/Player.js" />
         <option value="$PROJECT_DIR$/GAME/Units/manUnit.js" />
+        <option value="$PROJECT_DIR$/GAME/Units/Player.js" />
         <option value="$PROJECT_DIR$/GAME/gameStrateges/SinglePlayerStrategy.js" />
+        <option value="$PROJECT_DIR$/GAME/gameStrateges/GameScene.js" />
       </list>
     </option>
   </component>
@@ -331,12 +328,12 @@
       <updated>1508505866456</updated>
       <workItem from="1508505867700" duration="44315000" />
       <workItem from="1508658552494" duration="9311000" />
-      <workItem from="1508668487962" duration="27422000" />
+      <workItem from="1508668487962" duration="28689000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81048000" />
+    <option name="totallyTimeSpent" value="82315000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -405,7 +402,7 @@
         <state relative-caret-position="550">
           <caret line="25" column="11" lean-forward="false" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="11" />
           <folding>
-            <marker date="1508758913084" expanded="true" signature="1101:1577" ph="..." />
+            <marker date="1508760005431" expanded="true" signature="1124:1600" ph="..." />
           </folding>
         </state>
       </provider>
@@ -534,7 +531,7 @@
         <state relative-caret-position="1452">
           <caret line="66" column="17" lean-forward="true" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
           <folding>
-            <marker date="1508758913084" expanded="true" signature="1101:1577" ph="..." />
+            <marker date="1508760005431" expanded="true" signature="1124:1600" ph="..." />
           </folding>
         </state>
       </provider>
@@ -678,14 +675,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GAME/gameStrateges/GameScene.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1672">
-          <caret line="76" column="31" lean-forward="false" selection-start-line="76" selection-start-column="31" selection-end-line="76" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GAME/Units/towerUnit.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -726,14 +715,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GAME/Units/Player.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GAME/Units/manUnit.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -742,13 +723,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/GAME/Units/Player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="23" lean-forward="false" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GAME/gameStrateges/SinglePlayerStrategy.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+        <state relative-caret-position="440">
+          <caret line="29" column="20" lean-forward="true" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
           <folding>
-            <marker date="1508758913084" expanded="true" signature="1101:1577" ph="..." />
+            <marker date="1508760005431" expanded="true" signature="1124:1600" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GAME/gameStrateges/GameScene.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="161" column="24" lean-forward="false" selection-start-line="161" selection-start-column="24" selection-end-line="161" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
