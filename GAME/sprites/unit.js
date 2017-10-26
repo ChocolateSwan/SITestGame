@@ -1,6 +1,6 @@
 window.Man = (function (window) {
 
-  const MAN_IMAGE_PATH = "images/alien.png"
+  const MAN_IMAGE_PATH = "images/alienUnit.png"
   const MAN_WIDTH = 50;
   const MAN_HEIGHT = 50;
   const MAN_DAMAGE = 10;

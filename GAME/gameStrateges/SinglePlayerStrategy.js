@@ -136,7 +136,6 @@ window.SinglePlayerStrategy = (function (window) {
       this.state.opponent.towers.forEach(tower => {
         if (tower.health === 0 ){
       		this.state.coins.push(new Coin(tower.x_position,tower.y_position));
-      		console.log(this.state.coins);
 				}
 			})
 
@@ -158,6 +157,19 @@ window.SinglePlayerStrategy = (function (window) {
         this.state.randomTowersCoolDown = 500;
 			}
 
+
+
+      // пересечения пуль с моими
+      if (this.state && this.state.bullets) {
+        for(let collision of findCollisions(this.state.bullets,this.state.me.towers)) {
+          collision[0].damaged(collision[1]);
+          collision[1].damaged(collision[0]);
+        }
+      }
+
+      this.state.bullets = this.state.bullets.filter(blt => blt.deleted === 0);
+
+      this.state.me.towers = this.state.me.towers.filter(tower => tower.health !== 0);
 
 
 

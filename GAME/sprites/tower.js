@@ -1,10 +1,10 @@
 window.Tower = (function (window) {
 
-  const TOWER_IMAGE_PATH = "images/towertest.png"
+  const TOWER_IMAGE_PATH = "images/tower.png"
   const TOWER_WIDTH = 50;
   const TOWER_HEIGHT = 100;
   const TOWER_DAMAGE = 10;
-  const TOWER_HEALTH = 10; //100
+  const TOWER_HEALTH = 100;
 
   const  {Unit} = window
 

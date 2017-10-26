@@ -7,7 +7,6 @@ window.GameScene = (function (window) {
   const modelHeight = 640;
 
   //Scaling
-  // let scaleWidthCoeff = window.innerWidth/modelWidth;
   let scaleCoeff = window.innerHeight/modelHeight;
 
 
@@ -69,7 +68,7 @@ window.GameScene = (function (window) {
 
 		renderBackground(ctx){
       const moonSerface = new Image();
-      moonSerface.src    = "images/cartoon_moon_1.png";
+      moonSerface.src    = "images/moonBackground.png";
       moonSerface.onload = function() {
         ctx.drawImage(moonSerface,
           0,

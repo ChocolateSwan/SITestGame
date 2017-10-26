@@ -1,6 +1,6 @@
 window.Base = (function (window) {
 
-  const BASE_IMAGE_PATH = "images/army.png"
+  const BASE_IMAGE_PATH = "images/base.png"
   const BASE_WIDTH = 110;
   const BASE_HEIGHT = 110;
 
