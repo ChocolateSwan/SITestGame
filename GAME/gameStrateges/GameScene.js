@@ -3,12 +3,9 @@ window.GameScene = (function (window) {
 	// const Mediator = window.Mediator;
 
 	// Model coordinates
-	const modelWidth = 960;
-  const modelHeight = 640;
 
   //Scaling
   let scaleCoeff = window.innerHeight/modelHeight;
-
 
 	class GameScene {
 

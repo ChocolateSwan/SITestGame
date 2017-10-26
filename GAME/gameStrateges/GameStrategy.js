@@ -13,8 +13,6 @@ window.GameStrategy = (function (window) {
       this.subscribe(EVENTS.WE_ARE_LOGGED_IN,this.onLoggedIn.bind(this));
       this.subscribe(EVENTS.NEXT_STEP_CONTROLS_PRESSED, this.onNewCommand.bind(this));
 
-      this.me = null;
-      this.opponent = null;
       this.state = null;
     }
 

@@ -20,7 +20,5 @@ window.Game = (function (window) {
 			this.manager = null;
 		}
 	}
-
-
 	return Game;
 })(window);
