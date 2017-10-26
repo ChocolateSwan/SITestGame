@@ -152,7 +152,10 @@ window.GameScene = (function (window) {
           ctx.strokeText(this.state.opponent.name, 20, 50);
           ctx.strokeText("Base bombs: " + +(this.state.opponent.base.health), 20, 100);
           ctx.strokeText("Unit health: " + +(this.state.opponent.man.health), 20, 150);
+          if (this.state.opponent.bomb){
+            ctx.strokeText("Bomb in: " + Math.ceil((this.state.opponent.bomb.coolDown)/20), 600, 50);
 
+          }
       }
       if (this.state.me) {
         ctx.shadowColor = BLUE;

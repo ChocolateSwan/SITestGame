@@ -1,6 +1,5 @@
 window.SinglePlayerStrategy = (function (window) {
 
-	const Mediator = window.Mediator;
 	const GameStrategy = window.GameStrategy;
 	const {Player} = window;
 	const {Tower} = window;
@@ -8,10 +7,12 @@ window.SinglePlayerStrategy = (function (window) {
 	const {Bomb} = window;
 	const {Coin} = window;
 
-
 	const INTERVAL = 20;
+	const SET_TOWERS_COOL_DOWN = 500;
+	const SPEED_OF_BULLETS = 6;
 
-	const mediator = new Mediator;
+	// TODO башни с разной стоимостью
+	const TOWER_COST = 5;
 
 	const KEYS = {
 		FIRE: [' ', 'Enter'],
@@ -25,17 +26,12 @@ window.SinglePlayerStrategy = (function (window) {
 	class SinglePlayerStrategy extends GameStrategy {
 		constructor() {
 			super();
-			this.interval = null;
 		}
 
 		onLoggedIn(payload) {
-
-			this.me = payload.username;
-			this.opponent = 'Test Opponent';
-			// this.fireOpponentFound(this.me, this.opponent);
 			this.fireStartGame();
 			this.state = {
-				randomTowersCoolDown: 500,
+				randomTowersCoolDown: SET_TOWERS_COOL_DOWN,
 				bullets: [],
 				coins: [],
 				me: new Player("My name", {baseXpos: 840}, {manXpos:750}),
@@ -66,31 +62,29 @@ window.SinglePlayerStrategy = (function (window) {
 			if (this._pressed('DOWN', payload)) {
         this.state.me.moveMan('DOWN');
 			}
-
+			// Построить башню
 			if (this._pressed('TOWER', payload)) {
-				if (this.state.me.man.x_position >= 480 && this.state.me.coins >= 5){
+				if (this.state.me.man.x_position >= modelWidth/2 && this.state.me.coins >= TOWER_COST){
           this.state.me.towers.push(new Tower(3,
 						this.state.me.man.x_position,
 						this.state.me.man.y_position,
 						"LEFT"))
-					this.state.me.coins -= 5;
-
+					this.state.me.coins -= TOWER_COST;
 				}
-
       }
 		}
 
 		gameLoop() {
 
+			// Состояние пуль
       this.state.bullets = this.state.bullets.map(blt => {
-
         switch (blt.direction) {
           case 'RIGHT': {
-            blt.x_position += 7;
+            blt.x_position += SPEED_OF_BULLETS;
             break;
           }
           case 'LEFT': {
-            blt.x_position -= 7;
+            blt.x_position -= SPEED_OF_BULLETS;
             break;
           }
         }
@@ -154,7 +148,7 @@ window.SinglePlayerStrategy = (function (window) {
       this.state.randomTowersCoolDown -=1;
       if (this.state.randomTowersCoolDown === 0) {
       	this.setRandomTower();
-        this.state.randomTowersCoolDown = 500;
+        this.state.randomTowersCoolDown = SET_TOWERS_COOL_DOWN;
 			}
 
 

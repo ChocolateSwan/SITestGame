@@ -39,12 +39,12 @@ window.Player = (function (window) {
       }
     }
 
-    shootMan(){
+    shootMan() {
       if (this.man.direction === LEFT){
         return new Bullet (this.man.direction,
-          this.man.x_position,
+          this.man.x_position - 26, // TODO 26 - ширина пули + 1
           this.man.y_position + this.man.height/2 + 1)
-      } else {
+      } else { // в право
         return new Bullet (this.man.direction,
           this.man.x_position + this.man.width + 1,
           this.man.y_position + this.man.height/2 + 1)
