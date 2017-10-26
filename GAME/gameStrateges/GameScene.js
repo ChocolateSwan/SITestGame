@@ -1,13 +1,11 @@
 window.GameScene = (function (window) {
-  // TODO линия-разделитель поля на две половины
 
   //Scaling
   let scaleCoeff = window.innerHeight/modelHeight;
-
   const RED = "#F00";
   const BLUE = "#000dd4";
   const BLACK = "black";
-  const FONT = "italic 30pt Arial";
+  let FONT = "italic 20pt Arial";
 
 	class GameScene {
 
@@ -31,10 +29,9 @@ window.GameScene = (function (window) {
       document.body.style.overflow = "hidden";
 
       scaleCoeff = window.innerHeight/modelHeight;
-
       this.canvas.height = window.innerHeight;
       this.canvas.width = modelWidth*scaleCoeff;
-
+      FONT = "italic "+20*scaleCoeff + "pt Arial";
     }
 
 		setState(state) {
@@ -155,11 +152,11 @@ window.GameScene = (function (window) {
           ctx.shadowOffsetX = 5;
           ctx.shadowOffsetY = 5;
           ctx.shadowBlur = 5;
-          ctx.strokeText(this.state.opponent.name, 20, 50);
-          ctx.strokeText("Base bombs: " + +(this.state.opponent.base.health), 20, 100);
-          ctx.strokeText("Sprite health: " + +(this.state.opponent.unit.health), 20, 150);
+          ctx.strokeText(this.state.opponent.name, 10*scaleCoeff, 40*scaleCoeff);
+          ctx.strokeText("Base bombs: " + +(this.state.opponent.base.health), 10*scaleCoeff, 80*scaleCoeff);
+          ctx.strokeText("Sprite health: " + +(this.state.opponent.unit.health), 10*scaleCoeff, 120*scaleCoeff);
           if (this.state.opponent.bomb){
-            ctx.strokeText("Bomb in: " + Math.ceil((this.state.opponent.bomb.coolDown)/20), 600, 50);
+            ctx.strokeText("Bomb in: " + Math.ceil((this.state.opponent.bomb.coolDown)/20), 400*scaleCoeff, 40*scaleCoeff);
 
           }
       }
@@ -168,10 +165,10 @@ window.GameScene = (function (window) {
         ctx.shadowOffsetX = 5;
         ctx.shadowOffsetY = 5;
         ctx.shadowBlur = 5;
-        ctx.strokeText(this.state.me.name, 1100, 50);
-        ctx.strokeText("Base bombs: " + +(this.state.me.base.health), 1100, 100);
-        ctx.strokeText("Sprite health: " + +(this.state.me.unit.health), 1100, 150);
-        ctx.strokeText("Coins: " + this.state.me.coins,1100,200);
+        ctx.strokeText(this.state.me.name, 700*scaleCoeff, 40*scaleCoeff);
+        ctx.strokeText("Base bombs: " + +(this.state.me.base.health), 700*scaleCoeff, 80*scaleCoeff);
+        ctx.strokeText("Sprite health: " + +(this.state.me.unit.health), 700*scaleCoeff, 120*scaleCoeff);
+        ctx.strokeText("Coins: " + this.state.me.coins,700*scaleCoeff,160*scaleCoeff);
       }
       ctx.shadowColor = "";
       ctx.shadowOffsetX = 0;

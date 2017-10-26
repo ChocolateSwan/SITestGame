@@ -166,7 +166,14 @@ window.SinglePlayerStrategy = (function (window) {
       // TODO пересечение пули с пулями
 			// TODO пересечение юнита с оппонентом
 
-			// if (this.state.me.unit.health === 0) {
+			if (this.state.me.unit.health === 0){
+        this.state.me.unit.health  = 100;
+        this.state.me.unit.x_position = this.state.me.base.x_position;
+        this.state.me.unit.y_position = this.state.me.base.y_position;
+        this.state.me.base.health -= 1;
+			}
+
+			// if (this.state.me.base.health === 0) {
 			// 	alert ("Вы проиграли!!!!!!");
 			// }
       //
@@ -220,7 +227,6 @@ window.SinglePlayerStrategy = (function (window) {
 
 			//мной поставленные бомбы
 			if (this.state.opponent && this.state.opponent.bomb) {
-      	console.log(this.state.opponent.bomb.coolDown);
       	this.state.opponent.bomb.coolDown -= 1;
       	if (this.state.opponent.bomb.coolDown === 0){
       		this.state.opponent.bomb = null;
@@ -234,40 +240,19 @@ window.SinglePlayerStrategy = (function (window) {
 			// TODO сделать что то более адекватное
 			if (this.state.opponent){
         if (this.state.opponent.unit.coolDown >= 0) {
-          switch (this.state.opponent.unit.coolDown) {
-						case (48):
-              this.state.opponent.moveMan("UP");
-              this.state.bullets.push(
-                new Bullet ("RIGHT",
-                  this.state.opponent.unit.x_position + this.state.opponent.unit.width + 1,
-                  this.state.opponent.unit.y_position + this.state.opponent.unit.height/2 + 1),
-              )
-              break;
-						case (32):
-              this.state.opponent.moveMan("DOWN");
-              this.state.bullets.push(
-                new Bullet ("RIGHT",
-                  this.state.opponent.unit.x_position + this.state.opponent.unit.width + 1,
-                  this.state.opponent.unit.y_position + this.state.opponent.unit.height/2 + 1),
-              )
-              break;
-            case (16):
-              this.state.opponent.moveMan("DOWN");
-              this.state.bullets.push(
-                new Bullet ("RIGHT",
-                  this.state.opponent.unit.x_position + this.state.opponent.unit.width + 1,
-                  this.state.opponent.unit.y_position + this.state.opponent.unit.height/2 + 1),
-              )
-              break;
-						case (0):
-							this.state.opponent.moveMan("UP");
-              this.state.bullets.push(
-                new Bullet ("RIGHT",
-                  this.state.opponent.unit.x_position + this.state.opponent.unit.width + 1,
-                  this.state.opponent.unit.y_position + this.state.opponent.unit.height/2 + 1),
-              )
-              break;
-        }
+        	if (this.state.opponent.unit.coolDown > 47 || this.state.opponent.unit.coolDown < 16){
+            this.state.opponent.moveMan("UP");
+					} else {
+            this.state.opponent.moveMan("DOWN");
+					}
+					if (this.state.opponent.unit.coolDown % 16 === 0){
+            this.state.bullets.push(
+              new Bullet ("RIGHT",
+                this.state.opponent.unit.x_position + this.state.opponent.unit.width + 1,
+                this.state.opponent.unit.y_position + this.state.opponent.unit.height/2 + 1),
+            )
+					}
+					console.log(this.state.opponent.unit.coolDown);
           this.state.opponent.unit.coolDown -= 1;
         }else{
           this.state.opponent.unit.coolDown = 63;
@@ -279,7 +264,7 @@ window.SinglePlayerStrategy = (function (window) {
 		}
 
 		setRandomTower(){
-			this.state.opponent.towers.push(new Tower(1, 130, Math.random()*640))
+			this.state.opponent.towers.push(new Tower(1, 130, Math.random()*540))
 		}
 
     startGameLoop() {
