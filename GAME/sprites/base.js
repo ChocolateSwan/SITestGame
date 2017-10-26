@@ -7,14 +7,13 @@ window.Base = (function (window) {
   const  {Unit} = window
 
   class Base extends  Unit {
-    constructor (health = 100, x_position, y_position = 230) {
+    constructor (health = 3, x_position, y_position = 230) {
       super(x_position,
         y_position,
         BASE_IMAGE_PATH,
         BASE_WIDTH,
         BASE_HEIGHT);
       this.health  = health;
-      this.bombs = 3;
     }
   }
   return Base;

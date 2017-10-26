@@ -153,6 +153,18 @@ window.SinglePlayerStrategy = (function (window) {
         }
       })
 
+			//мной поставленные бомбы
+			if (this.state.opponent && this.state.opponent.bomb) {
+      	this.state.opponent.bomb.coolDown -= 1;
+      	if (this.state.opponent.bomb.coolDown === 0){
+      		this.state.opponent.bomb = null;
+      		this.state.opponent.base.health -= 1;
+				}
+			}
+
+
+			// TODO оппонентом постаавленные бомбы
+
 
 
 			if (this.state.opponent){

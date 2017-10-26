@@ -153,7 +153,7 @@ window.GameScene = (function (window) {
           ctx.shadowOffsetY = 5;
           ctx.shadowBlur = 5;
           ctx.strokeText(this.state.opponent.name, 20, 50);
-          ctx.strokeText("Base health: " + +(this.state.opponent.base.health), 20, 100);
+          ctx.strokeText("Base bombs: " + +(this.state.opponent.base.health), 20, 100);
           ctx.strokeText("Unit health: " + +(this.state.opponent.man.health), 20, 150);
       }
       if (this.state.me) {
@@ -162,7 +162,7 @@ window.GameScene = (function (window) {
         ctx.shadowOffsetY = 5;
         ctx.shadowBlur = 5;
         ctx.strokeText(this.state.me.name, 1100, 50);
-        ctx.strokeText("Base health: " + +(this.state.me.base.health), 1100, 100);
+        ctx.strokeText("Base bombs: " + +(this.state.me.base.health), 1100, 100);
         ctx.strokeText("Unit health: " + +(this.state.me.man.health), 1100, 150);
       }
       ctx.shadowColor = "";
