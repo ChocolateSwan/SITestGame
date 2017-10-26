@@ -6,6 +6,7 @@ window.SinglePlayerStrategy = (function (window) {
 	const {Tower} = window;
 	const {findCollisions} = window;
 	const {Bomb} = window;
+	const {Coin} = window;
 
 
 	const INTERVAL = 20;
@@ -34,7 +35,7 @@ window.SinglePlayerStrategy = (function (window) {
 			// this.fireOpponentFound(this.me, this.opponent);
 			this.fireStartGame();
 			this.state = {
-				net: 0,
+				randomTowersCoolDown: 500,
 				bullets: [],
 				coins: [],
 				me: new Player("My name", {baseXpos: 840}, {manXpos:750}),
@@ -67,8 +68,13 @@ window.SinglePlayerStrategy = (function (window) {
 			}
 
 			if (this._pressed('TOWER', payload)) {
-				if (this.state.me.man.x_position >= 480){
-          this.state.me.towers.push(new Tower(3, this.state.me.man.x_position, this.state.me.man.y_position, "LEFT"));
+				if (this.state.me.man.x_position >= 480 && this.state.me.coins >= 5){
+          this.state.me.towers.push(new Tower(3,
+						this.state.me.man.x_position,
+						this.state.me.man.y_position,
+						"LEFT"))
+					this.state.me.coins -= 5;
+
 				}
 
       }
@@ -110,19 +116,60 @@ window.SinglePlayerStrategy = (function (window) {
         	if (!this.state.opponent.bomb) {
             console.log("boomb");
             this.state.opponent.bomb = new Bomb(this.state.opponent.base.x_position,
-							this.state.opponent.base.y_position, 10);
+							this.state.opponent.base.y_position);
 					}
         }
       }
 
+      // пересечения пуль с башнями оппонента
+      if (this.state && this.state.bullets) {
+      	// console.log(this.state.opponent.towers);
+        for(let collision of findCollisions(this.state.bullets,this.state.opponent.towers)) {
+          console.log(collision);
+          collision[0].damaged(collision[1]);
+          collision[1].damaged(collision[0]);
+        }
+      }
 
-			// if (this.state.me.man.health <= 0) {
+      this.state.bullets = this.state.bullets.filter(blt => blt.deleted === 0);
+
+      this.state.opponent.towers.forEach(tower => {
+        if (tower.health === 0 ){
+      		this.state.coins.push(new Coin(tower.x_position,tower.y_position));
+      		console.log(this.state.coins);
+				}
+			})
+
+      this.state.opponent.towers = this.state.opponent.towers.filter(tower => tower.health !== 0);
+
+      // обработка монеток
+      if (this.state && this.state.coins) {
+        for(let collision of findCollisions(this.state.coins,[this.state.me.man])) {
+          collision[0].collected = 1;
+          this.state.me.coins += collision[0].cost;
+        }
+      }
+
+      this.state.coins = this.state.coins.filter(coin => coin.collected === 0);
+
+      this.state.randomTowersCoolDown -=1;
+      if (this.state.randomTowersCoolDown === 0) {
+      	this.setRandomTower();
+        this.state.randomTowersCoolDown = 500;
+			}
+
+
+
+
+
+      // TODO пули с пулями
+
+			// if (this.state.me.man.health === 0) {
 			// 	alert ("Вы проиграли!!!!!!");
-				// return this.fireGameOver(`Игра окончена, вы проиграли (${this.me}:${this.state.me.hp} / ${this.opponent}:${this.state.opponent.hp})`);
 			// }
       //
-			// if (this.state.opponent.healthOfBase <= 0) {
-			// 	return this.fireGameOver(`Игра окончена, вы победили (${this.me}:${this.state.me.hp} / ${this.opponent}:${this.state.opponent.hp})`);
+			// if (this.state.opponent.base.health === 0) {
+			// 	alert ("Вы победили!!!!");
 			// }
 
 			// файерболы оппонента
@@ -155,6 +202,7 @@ window.SinglePlayerStrategy = (function (window) {
 
 			//мной поставленные бомбы
 			if (this.state.opponent && this.state.opponent.bomb) {
+      	console.log(this.state.opponent.bomb.coolDown);
       	this.state.opponent.bomb.coolDown -= 1;
       	if (this.state.opponent.bomb.coolDown === 0){
       		this.state.opponent.bomb = null;
@@ -163,8 +211,8 @@ window.SinglePlayerStrategy = (function (window) {
 			}
 
 
-			// TODO оппонентом постаавленные бомбы
-
+			// TODO оппонентом поставленные бомбы
+			// TODO монеты
 
 
 			if (this.state.opponent){
@@ -213,8 +261,14 @@ window.SinglePlayerStrategy = (function (window) {
 			this.fireSetNewGameState(this.state);
 		}
 
+
+		setRandomTower(){
+			this.state.opponent.towers.push(new Tower(1, 130, Math.random()*640))
+		}
+
+
     startGameLoop() {
-			this.interval = setInterval(() => this.gameLoop(), 1000); //1000
+			this.interval = setInterval(() => this.gameLoop(), INTERVAL); //1000
     }
 
 

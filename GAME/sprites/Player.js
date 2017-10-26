@@ -21,6 +21,7 @@ window.Player = (function (window) {
       this.base = new Base (baseOptions.baseHealth,
         baseOptions.baseXpos,
         baseOptions.baseYpos);
+      this.coins = 10;
     }
 
     moveMan(direction){

@@ -9,7 +9,7 @@ window.Bomb = (function (window) {
 
   class Bomb extends  Unit {
 
-    constructor (x_position, y_position, coolDown = 10) {
+    constructor (x_position, y_position, coolDown = 100) {
       super(x_position,
         y_position,
         BOMB_IMAGE_PATH,

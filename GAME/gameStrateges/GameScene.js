@@ -63,6 +63,8 @@ window.GameScene = (function (window) {
 
       this.renderBombs(ctx);
 
+      this.renderCoins(ctx);
+
 		}
 
 		renderBackground(ctx){
@@ -155,6 +157,7 @@ window.GameScene = (function (window) {
           ctx.strokeText(this.state.opponent.name, 20, 50);
           ctx.strokeText("Base bombs: " + +(this.state.opponent.base.health), 20, 100);
           ctx.strokeText("Unit health: " + +(this.state.opponent.man.health), 20, 150);
+
       }
       if (this.state.me) {
         ctx.shadowColor = "#000dd4";
@@ -164,6 +167,7 @@ window.GameScene = (function (window) {
         ctx.strokeText(this.state.me.name, 1100, 50);
         ctx.strokeText("Base bombs: " + +(this.state.me.base.health), 1100, 100);
         ctx.strokeText("Unit health: " + +(this.state.me.man.health), 1100, 150);
+        ctx.strokeText("Coins: " + this.state.me.coins,1100,200);
       }
       ctx.shadowColor = "";
       ctx.shadowOffsetX = 0;
@@ -180,6 +184,18 @@ window.GameScene = (function (window) {
           this.state.opponent.bomb.height*scaleCoeff);
       }
         // TODO моя бомба
+    }
+
+    renderCoins(ctx){
+      if (this.state && this.state.coins){
+        this.state.coins.forEach(coin => {
+          ctx.drawImage(coin.image,
+            coin.x_position*scaleCoeff,
+            coin.y_position*scaleCoeff,
+            coin.width*scaleCoeff,
+            coin.height*scaleCoeff);
+        });
+      }
     }
 
 		destroy() {
