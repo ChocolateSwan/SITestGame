@@ -10,7 +10,7 @@ window.Tower = (function (window) {
 
   class Tower extends  Unit {
 
-    constructor (coolDown, x_position, y_position) {
+    constructor (coolDown, x_position, y_position, direction = "RIGHT") {
       super(x_position,
         y_position,
         TOWER_IMAGE_PATH,
@@ -19,13 +19,15 @@ window.Tower = (function (window) {
       this.coolDown = coolDown;
       this.damage = TOWER_DAMAGE;
       this.health = TOWER_HEALTH;
-
+      this.direction = direction;
     }
 
 
-    damaged (damage) {
-
-
+    damaged (sprite) {
+      this.health -= sprite.damage;
+      if (this.health < 0){
+        this.health = 0;
+      }
     }
 
 

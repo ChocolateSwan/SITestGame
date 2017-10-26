@@ -4,6 +4,9 @@ window.SinglePlayerStrategy = (function (window) {
 	const GameStrategy = window.GameStrategy;
 	const {Player} = window;
 	const {Tower} = window;
+	const {findCollisions} = window;
+	const {Bomb} = window;
+
 
 	const INTERVAL = 20;
 
@@ -33,7 +36,7 @@ window.SinglePlayerStrategy = (function (window) {
 			this.state = {
 				net: 0,
 				bullets: [],
-
+				coins: [],
 				me: new Player("My name", {baseXpos: 840}, {manXpos:750}),
 				opponent: new Player("Opponent", {baseXpos: 10}, {manXpos:190}),
 			};
@@ -45,7 +48,6 @@ window.SinglePlayerStrategy = (function (window) {
 		}
 
 		onNewCommand(payload) {
-			console.log(payload);
 			if (this._pressed('FIRE', payload)) {
 				this.state.bullets.push(this.state.me.shootMan());
 				return;
@@ -65,65 +67,54 @@ window.SinglePlayerStrategy = (function (window) {
 			}
 
 			if (this._pressed('TOWER', payload)) {
-				this.state.net = 1;
-			}
-			else {
-        this.state.net = 0;
-			}
+				if (this.state.me.man.x_position >= 480){
+          this.state.me.towers.push(new Tower(3, this.state.me.man.x_position, this.state.me.man.y_position, "LEFT"));
+				}
+
+      }
 		}
 
 		gameLoop() {
-			// Это пули (управление)
 
-			if (this.state && this.state.bullets) {
-				this.state.bullets = this.state.bullets.map(blt => {
+      this.state.bullets = this.state.bullets.map(blt => {
 
-					switch (blt.direction) {
-						case 'RIGHT': {
-							blt.x_position += 7;
-							if ( blt.x_position + blt.width > this.state.me.man.x_position
-								&& blt.x_position + blt.width < this.state.me.man.x_position + this.state.me.man.width
-							  && (blt.y_position + blt.height > this.state.me.man.y_position &&
-                  blt.y_position + blt.height < this.state.me.man.y_position + this.state.me.man.height
-										|| this.state.me.man.y_position + this.state.me.man.height > blt.y_position &&
-                  this.state.me.man.y_position + this.state.me.man.height < blt.y_position + blt.height
-								)) {
-
-                  this.state.me.man.health -= 10;
-                  // console.error("Our health = ", this.state.me.man.health);
-                  return null;
+        switch (blt.direction) {
+          case 'RIGHT': {
+            blt.x_position += 7;
+            break;
+          }
+          case 'LEFT': {
+            blt.x_position -= 7;
+            break;
+          }
+        }
+            return blt;
+        });
 
 
-							}
-							break;
-						}
-						case 'LEFT': {
-              blt.x_position -= 7;
 
+			// Пересечения пуль с моим юнитом;
+      if (this.state && this.state.bullets) {
+        for(let collision of findCollisions(this.state.bullets,[this.state.me.man])) {
+          // console.log(collision);
+          collision[0].damaged(collision[1]);
+					collision[1].damaged(collision[0]);
+        }
+      }
+      this.state.bullets = this.state.bullets.filter(blt => blt.deleted === 0);
 
-							// blt.y++;
-							// if (Math.abs(this.state.opponent.xpos - blt.x) <= 1) {
-							// 	if (Math.abs(this.state.opponent.ypos - blt.y) <= 1) {
-							// 		this.state.opponent.hp--;
-							// 		return null;
-							// 	}
-							// }
-							// break;
+      // Установка бомбы
+      if (this.state && this.state.me && this.state.opponent) {
 
-              // if ( blt.x_position  < this.state.opponent.base.x_position + this.state.opponent.base.x_position.width){
-               //  this.state.opponent.base.health -=10;
-               //  console.warn("opponent base",this.state.opponent.base.health);
-							// }
-
-						}
+        for(let collision of findCollisions([this.state.me.man],[this.state.opponent.base])) {
+        	if (!this.state.opponent.bomb) {
+            console.log("boomb");
+            this.state.opponent.bomb = new Bomb(this.state.opponent.base.x_position,
+							this.state.opponent.base.y_position, 10);
 					}
-					if (blt.y > 1000 || blt.y < 0) {
-						return null;
-					}
-					return blt;
-				});
-				this.state.bullets = this.state.bullets.filter(blt => blt);
-			}
+        }
+      }
+
 
 			// if (this.state.me.man.health <= 0) {
 			// 	alert ("Вы проиграли!!!!!!");
@@ -134,19 +125,35 @@ window.SinglePlayerStrategy = (function (window) {
 			// 	return this.fireGameOver(`Игра окончена, вы победили (${this.me}:${this.state.me.hp} / ${this.opponent}:${this.state.opponent.hp})`);
 			// }
 
-			// Пульки
-			this.state.opponent.towers.forEach(towel => {
-				if (towel.coolDown > 0) {
-					towel.coolDown -- ;
+			// файерболы оппонента
+			this.state.opponent.towers.forEach(tower => {
+				if (tower.coolDown > 0) {
+					tower.coolDown -- ;
 				} else {
 					this.state.bullets.push(
-               new Bullet ("RIGHT",
-                towel.x_position + towel.width + 1,
-                towel.y_position + towel.height/4 +1),
+               new Bullet (tower.direction,
+                tower.x_position + tower.width + 1,
+                tower.y_position + tower.height/4 +1),
 					)
-					towel.coolDown = 50;
+					tower.coolDown = 50;
 				}
 			})
+
+			// файерболы мои
+      this.state.me.towers.forEach(tower => {
+        if (tower.coolDown > 0) {
+          tower.coolDown -- ;
+        } else {
+          this.state.bullets.push(
+            new Bullet (tower.direction,
+              tower.x_position,
+              tower.y_position + tower.height/4 +1),
+          )
+          tower.coolDown = 50;
+        }
+      })
+
+
 
 			if (this.state.opponent){
         if (this.state.opponent.man.coolDown >= 0) {
@@ -195,55 +202,11 @@ window.SinglePlayerStrategy = (function (window) {
 		}
 
     startGameLoop() {
-			this.interval = setInterval(() => this.gameLoop(), INTERVAL);
+			this.interval = setInterval(() => this.gameLoop(), 1000); //1000
     }
 
 
-    // Два массива
-    // processingCollisions(unitArr1, unitArr2){
-			// unitArr1.forEach(elArr1 => {
-			// 	unitArr2.forEach(elArr2 => {
-			// 		if (
-			// 			(
-			// 			  (
-			// 			    (elArr1.x_position + elArr1.width >= elArr2.x_position) && //elArr1 слева от elArr2
-			// 					(elArr1.x_position <= elArr2.x_position + elArr2.width)
-			// 				) ||
-			// 				(
-			// 					(elArr1.x_position <= elArr2.x_position + elArr2.width ) && //elArr1 слева от elArr2
-    //       			(elArr1.x_position + elArr1.width >= elArr2.x_position)
-			// 				)
-			// 			) &&
-			// 			(
-			// 				(
-			// 					(elArr1.y_position + elArr1.height >= elArr2.y_position) &&  // elArr1 сверху от elArr2
-    //         		(elArr1.y_position <= elArr2.y_position + elArr2.height)
-			// 				) ||
-			// 				(
-    //             (elArr1.y_position <= elArr2.y_position + elArr2.height) &&  //elArr1 снизу от elArr2
-    //             (elArr1.y_position + elArr1.height >= elArr2.y_position)
-			// 				)
-			// 			)
-			// 		) {
-			// 			// TODO у базы не health
-			// 			// TODO damage
-			// 			// TODO damaged (у башен добавить монетки)
-			// 			if (elArr1.damage !== undefined && elArr2.health !== undefined){
-			// 				elArr2.damaged(elArr1.damage);
-			// 			}
-			// 			if (elArr2.damage !== undefined && elArr1.health !== undefined){
-    //           elArr1.damaged(elArr2.damage);
-			// 			}
-    //         if (elArr2 instanceof Bullet) {
-    //           // удалить пулю
-    //         }
-    //         if (elArr1 instanceof Bullet) {
-    //           // удалить пулю
-    //         }
-			// 		}
-			// 	})
-			// })
-    // }
+
 
 
     //

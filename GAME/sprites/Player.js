@@ -17,6 +17,7 @@ window.Player = (function (window) {
         manOptions.manXpos,
         manOptions.manYpos);
       this.towers = [];
+      this.bomb = null;
       this.base = new Base (baseOptions.baseHealth,
         baseOptions.baseXpos,
         baseOptions.baseYpos);

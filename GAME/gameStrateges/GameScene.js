@@ -49,7 +49,7 @@ window.GameScene = (function (window) {
 
 			const ctx = this.ctx;
 
-      this.renderBackground(ctx)
+      this.renderBackground(ctx);
 
       this.renderBases(ctx);
 
@@ -60,6 +60,8 @@ window.GameScene = (function (window) {
       this.renderBullets(ctx);
 
       this.renderText(ctx);
+
+      this.renderBombs(ctx);
 
 		}
 
@@ -111,14 +113,23 @@ window.GameScene = (function (window) {
     }
 
 		renderTowers(ctx){
-      if (this.state.opponent){
-        this.state.opponent.towers.forEach(tower=>{
+      if (this.state.opponent) {
+        this.state.opponent.towers.forEach(tower => {
           ctx.drawImage(tower.image,
-            tower.x_position*scaleCoeff,
-            tower.y_position*scaleCoeff,
-            tower.width*scaleCoeff,
-            tower.height*scaleCoeff);
+            tower.x_position * scaleCoeff,
+            tower.y_position * scaleCoeff,
+            tower.width * scaleCoeff,
+            tower.height * scaleCoeff);
         })
+      }
+        if (this.state.me){
+          this.state.me.towers.forEach(tower=>{
+            ctx.drawImage(tower.image,
+              tower.x_position*scaleCoeff,
+              tower.y_position*scaleCoeff,
+              tower.width*scaleCoeff,
+              tower.height*scaleCoeff);
+          })
       }
     }
 
@@ -158,6 +169,17 @@ window.GameScene = (function (window) {
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 0;
       ctx.shadowBlur = 0;
+    }
+
+    renderBombs(ctx){
+      if (this.state.opponent && this.state.opponent.bomb){
+        ctx.drawImage(this.state.opponent.bomb.image,
+          this.state.opponent.bomb.x_position*scaleCoeff,
+          this.state.opponent.bomb.y_position*scaleCoeff,
+          this.state.opponent.bomb.width*scaleCoeff,
+          this.state.opponent.bomb.height*scaleCoeff);
+      }
+        // TODO моя бомба
     }
 
 		destroy() {

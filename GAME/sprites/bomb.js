@@ -9,12 +9,14 @@ window.Bomb = (function (window) {
 
   class Bomb extends  Unit {
 
-    constructor (x_position, y_position) {
+    constructor (x_position, y_position, coolDown = 10) {
       super(x_position,
         y_position,
         BOMB_IMAGE_PATH,
         BOMB_WIDTH,
         BOMB_HEIGHT);
+
+      this.coolDown = coolDown;
     }
   }
   return Bomb;

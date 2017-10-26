@@ -27,7 +27,7 @@ window.ControllersManager = (function (window) {
 			});
 
 			const clicked = allkeys.reduce((res, key) => {
-				if (key === "enter" || key ===" "){
+				if (key === "enter" || key ===" " || key === "shift"){
           res[key] = !this.previous[key] && this.keys[key]
 				}
 				else{

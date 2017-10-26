@@ -58,6 +58,15 @@ window.Man = (function (window) {
         }
     }
 
+    // TODO обработка смерти
+    damaged(sprite){
+      console.log(sprite.damage)
+      this.health -= sprite.damage;
+      if (this.health < 0){
+        this.health = 0;
+      }
+    }
+
     setCoolDown(coolDown){
       this.coolDown = coolDown;
     }

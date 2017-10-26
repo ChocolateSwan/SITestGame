@@ -14,6 +14,7 @@ window.Base = (function (window) {
         BASE_WIDTH,
         BASE_HEIGHT);
       this.health  = health;
+      this.bombs = 3;
     }
   }
   return Base;
