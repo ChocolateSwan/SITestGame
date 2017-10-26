@@ -9,6 +9,8 @@ window.Unit = (function () {
       this.width = width;
       this.height = height;
     }
+
+    damaged (){};
   }
   return Unit;
 })(window);

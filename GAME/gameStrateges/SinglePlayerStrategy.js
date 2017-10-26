@@ -5,6 +5,8 @@ window.SinglePlayerStrategy = (function (window) {
 	const {Player} = window;
 	const {Tower} = window;
 
+	const INTERVAL = 20;
+
 	const mediator = new Mediator;
 
 	const KEYS = {
@@ -13,6 +15,7 @@ window.SinglePlayerStrategy = (function (window) {
 		RIGHT: ['d', 'D', 'в', 'В', 'ArrowRight'],
 		DOWN: ['s', 'S', 'ы', 'Ы', 'ArrowDown'],
 		UP: ['w', 'W', 'ц', 'Ц', 'ArrowUp'],
+		TOWER: ['shift']
 	};
 
 	class SinglePlayerStrategy extends GameStrategy {
@@ -22,11 +25,13 @@ window.SinglePlayerStrategy = (function (window) {
 		}
 
 		onLoggedIn(payload) {
+
 			this.me = payload.username;
 			this.opponent = 'Test Opponent';
 			// this.fireOpponentFound(this.me, this.opponent);
 			this.fireStartGame();
 			this.state = {
+				net: 0,
 				bullets: [],
 
 				me: new Player("My name", {baseXpos: 840}, {manXpos:750}),
@@ -40,6 +45,7 @@ window.SinglePlayerStrategy = (function (window) {
 		}
 
 		onNewCommand(payload) {
+			console.log(payload);
 			if (this._pressed('FIRE', payload)) {
 				this.state.bullets.push(this.state.me.shootMan());
 				return;
@@ -53,8 +59,16 @@ window.SinglePlayerStrategy = (function (window) {
 			if (this._pressed('UP', payload)) {
         this.state.me.moveMan('UP');
 			}
+
 			if (this._pressed('DOWN', payload)) {
         this.state.me.moveMan('DOWN');
+			}
+
+			if (this._pressed('TOWER', payload)) {
+				this.state.net = 1;
+			}
+			else {
+        this.state.net = 0;
 			}
 		}
 
@@ -66,17 +80,17 @@ window.SinglePlayerStrategy = (function (window) {
 
 					switch (blt.direction) {
 						case 'RIGHT': {
-							blt.x_position += 10;
+							blt.x_position += 7;
 							if ( blt.x_position + blt.width > this.state.me.man.x_position
 								&& blt.x_position + blt.width < this.state.me.man.x_position + this.state.me.man.width
 							  && (blt.y_position + blt.height > this.state.me.man.y_position &&
-                  blt.y_position + blt.height < this.state.me.man.y_position + this.state.me.man.height // TODO
+                  blt.y_position + blt.height < this.state.me.man.y_position + this.state.me.man.height
 										|| this.state.me.man.y_position + this.state.me.man.height > blt.y_position &&
                   this.state.me.man.y_position + this.state.me.man.height < blt.y_position + blt.height
 								)) {
 
                   this.state.me.man.health -= 10;
-                  console.error("Our health = ", this.state.me.man.health);
+                  // console.error("Our health = ", this.state.me.man.health);
                   return null;
 
 
@@ -84,7 +98,7 @@ window.SinglePlayerStrategy = (function (window) {
 							break;
 						}
 						case 'LEFT': {
-              blt.x_position -= 10;
+              blt.x_position -= 7;
 
 
 							// blt.y++;
@@ -130,7 +144,7 @@ window.SinglePlayerStrategy = (function (window) {
                 towel.x_position + towel.width + 1,
                 towel.y_position + towel.height/4 +1),
 					)
-					towel.coolDown = 10;
+					towel.coolDown = 50;
 				}
 			})
 
@@ -181,8 +195,57 @@ window.SinglePlayerStrategy = (function (window) {
 		}
 
     startGameLoop() {
-			this.interval = setInterval(() => this.gameLoop(), 100);
+			this.interval = setInterval(() => this.gameLoop(), INTERVAL);
     }
+
+
+    // Два массива
+    // processingCollisions(unitArr1, unitArr2){
+			// unitArr1.forEach(elArr1 => {
+			// 	unitArr2.forEach(elArr2 => {
+			// 		if (
+			// 			(
+			// 			  (
+			// 			    (elArr1.x_position + elArr1.width >= elArr2.x_position) && //elArr1 слева от elArr2
+			// 					(elArr1.x_position <= elArr2.x_position + elArr2.width)
+			// 				) ||
+			// 				(
+			// 					(elArr1.x_position <= elArr2.x_position + elArr2.width ) && //elArr1 слева от elArr2
+    //       			(elArr1.x_position + elArr1.width >= elArr2.x_position)
+			// 				)
+			// 			) &&
+			// 			(
+			// 				(
+			// 					(elArr1.y_position + elArr1.height >= elArr2.y_position) &&  // elArr1 сверху от elArr2
+    //         		(elArr1.y_position <= elArr2.y_position + elArr2.height)
+			// 				) ||
+			// 				(
+    //             (elArr1.y_position <= elArr2.y_position + elArr2.height) &&  //elArr1 снизу от elArr2
+    //             (elArr1.y_position + elArr1.height >= elArr2.y_position)
+			// 				)
+			// 			)
+			// 		) {
+			// 			// TODO у базы не health
+			// 			// TODO damage
+			// 			// TODO damaged (у башен добавить монетки)
+			// 			if (elArr1.damage !== undefined && elArr2.health !== undefined){
+			// 				elArr2.damaged(elArr1.damage);
+			// 			}
+			// 			if (elArr2.damage !== undefined && elArr1.health !== undefined){
+    //           elArr1.damaged(elArr2.damage);
+			// 			}
+    //         if (elArr2 instanceof Bullet) {
+    //           // удалить пулю
+    //         }
+    //         if (elArr1 instanceof Bullet) {
+    //           // удалить пулю
+    //         }
+			// 		}
+			// 	})
+			// })
+    // }
+
+
     //
 		// stopGameLoop() {
 		// 	if (this.interval) {

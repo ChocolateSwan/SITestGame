@@ -3,6 +3,7 @@ window.Man = (function (window) {
   const MAN_IMAGE_PATH = "images/alien.png"
   const MAN_WIDTH = 50;
   const MAN_HEIGHT = 50;
+  const MAN_DAMAGE = 10;
 
   const LEFT = "LEFT";
   const RIGHT = "RIGHT";
@@ -24,6 +25,7 @@ window.Man = (function (window) {
       this.health= health;
       this.direction = LEFT;
       this.coolDown = 0;
+      this.damage = MAN_DAMAGE;
     }
 
     goDown(){

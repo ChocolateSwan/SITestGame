@@ -135,7 +135,6 @@ window.GameScene = (function (window) {
     }
 
     renderText(ctx){
-      ctx.shadowColor = "#F00";
       ctx.font = "italic 30pt Arial";
       if (this.state.opponent) {
           ctx.shadowColor = "#F00";
@@ -155,17 +154,11 @@ window.GameScene = (function (window) {
         ctx.strokeText("Base health: " + +(this.state.me.base.health), 1100, 100);
         ctx.strokeText("Unit health: " + +(this.state.me.man.health), 1100, 150);
       }
-
       ctx.shadowColor = "";
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 0;
       ctx.shadowBlur = 0;
-
     }
-
-		// setNames(me, opponent) {
-		// 	this.players = {me, opponent};
-		// }
 
 		destroy() {
 			window.removeEventListener('resize', this.bindedResizer);

@@ -2,28 +2,21 @@ window.ControllersManager = (function (window) {
 
 	class ControllersManager {
 		constructor() {
-			console.log('ControllersManager.fn');
-
 			this.previous = {};
 			this.keys = {};
-
 			this._onPress = this._keyHandler.bind(this, 'press');
 			this._onUp = this._keyHandler.bind(this, 'up');
+			this._mouseUp = this._mouseHandler.bind(this, 'mouseUp');
+			// this._mouseDown = this._mouseDown.bind(this, 'mouseDon')
 		}
 
-		/**
-		 * Начинаем слушать события клавиатуры
-		 */
+
 		init() {
-			console.log("ControllersManager init");
 			document.addEventListener('keydown', this._onPress);
 			document.addEventListener('keyup', this._onUp);
+			document.addEventListener('mouseup', this._mouseUp);
 		}
 
-		/**
-		 * Получить клавиши, нажатые с момента прошлого запроса
-		 * @returns {*}
-		 */
 		diff() {
 			let allkeys = [];
 			allkeys.push.apply(allkeys, Object.keys(this.previous));
@@ -47,31 +40,22 @@ window.ControllersManager = (function (window) {
 			return clicked;
 		}
 
-
-		/**
-		 * Нажата ли клавиша?
-		 * @param  {string}  key
-		 * @return {boolean}
-		 */
 		is(key) {
 			return this.keys[key];
 		}
 
-		/**
-		 * Обработчик события
-		 * @param  {string} type
-		 * @param  {MouseEvent} event
-		 */
 		_keyHandler(type, event) {
 			this.keys[event.key.toLowerCase()] = type === 'press';
 		}
 
-		/**
-		 * Прекращаем слушать события клавиатуры
-		 */
+		_mouseHandler(type, event) {
+			console.log(event);
+		}
+
 		destroy() {
 			document.removeEventListener('keydown', this._onPress);
 			document.removeEventListener('keyup', this._onUp);
+			document.removeEventListener('mouseup', this._mouseUp);
 		}
 	}
 
