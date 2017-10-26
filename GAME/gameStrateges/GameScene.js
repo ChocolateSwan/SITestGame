@@ -1,4 +1,5 @@
 window.GameScene = (function (window) {
+  // TODO линия-разделитель поля на две половины
 
   //Scaling
   let scaleCoeff = window.innerHeight/modelHeight;

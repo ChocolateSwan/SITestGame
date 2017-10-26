@@ -8,8 +8,9 @@ window.SinglePlayerStrategy = (function (window) {
 	const {Coin} = window;
 
 	const INTERVAL = 20;
-	const SET_TOWERS_COOL_DOWN = 500;
+	const SET_TOWERS_COOL_DOWN = 300;
 	const SPEED_OF_BULLETS = 6;
+	const TOWER_COOLDOWN = 50;
 
 	// TODO башни с разной стоимостью
 	const TOWER_COST = 5;
@@ -75,6 +76,7 @@ window.SinglePlayerStrategy = (function (window) {
 		}
 
 		gameLoop() {
+			// TODO разгрести мусорку тут
 
 			// Состояние пуль
       this.state.bullets = this.state.bullets.map(blt => {
@@ -96,7 +98,6 @@ window.SinglePlayerStrategy = (function (window) {
 			// Пересечения пуль с моим юнитом;
       if (this.state && this.state.bullets) {
         for(let collision of findCollisions(this.state.bullets,[this.state.me.man])) {
-          // console.log(collision);
           collision[0].damaged(collision[1]);
 					collision[1].damaged(collision[0]);
         }
@@ -105,19 +106,16 @@ window.SinglePlayerStrategy = (function (window) {
 
       // Установка бомбы
       if (this.state && this.state.me && this.state.opponent) {
-
         for(let collision of findCollisions([this.state.me.man],[this.state.opponent.base])) {
         	if (!this.state.opponent.bomb) {
-            console.log("boomb");
-            this.state.opponent.bomb = new Bomb(this.state.opponent.base.x_position,
-							this.state.opponent.base.y_position);
+            this.state.opponent.bomb = new Bomb(this.state.opponent.base.x_position + this.state.opponent.base.width/3,
+							this.state.opponent.base.y_position + this.state.opponent.base.height/3);
 					}
         }
       }
 
       // пересечения пуль с башнями оппонента
       if (this.state && this.state.bullets) {
-      	// console.log(this.state.opponent.towers);
         for(let collision of findCollisions(this.state.bullets,this.state.opponent.towers)) {
           console.log(collision);
           collision[0].damaged(collision[1]);
@@ -127,9 +125,11 @@ window.SinglePlayerStrategy = (function (window) {
 
       this.state.bullets = this.state.bullets.filter(blt => blt.deleted === 0);
 
+      // За каждую убитую башню добавить монетки
       this.state.opponent.towers.forEach(tower => {
         if (tower.health === 0 ){
-      		this.state.coins.push(new Coin(tower.x_position,tower.y_position));
+      		this.state.coins.push(new Coin(tower.x_position + tower.width/2,
+						tower.y_position+tower.height/2));
 				}
 			})
 
@@ -145,15 +145,14 @@ window.SinglePlayerStrategy = (function (window) {
 
       this.state.coins = this.state.coins.filter(coin => coin.collected === 0);
 
+      // Установка рандобных башенок у соперника
       this.state.randomTowersCoolDown -=1;
       if (this.state.randomTowersCoolDown === 0) {
       	this.setRandomTower();
         this.state.randomTowersCoolDown = SET_TOWERS_COOL_DOWN;
 			}
 
-
-
-      // пересечения пуль с моими
+      // пересечения пуль с моими башеями
       if (this.state && this.state.bullets) {
         for(let collision of findCollisions(this.state.bullets,this.state.me.towers)) {
           collision[0].damaged(collision[1]);
@@ -165,10 +164,8 @@ window.SinglePlayerStrategy = (function (window) {
 
       this.state.me.towers = this.state.me.towers.filter(tower => tower.health !== 0);
 
-
-
-
-      // TODO пули с пулями
+      // TODO пересечение пули с пулями
+			// TODO пересечение юнита с оппонентом
 
 			// if (this.state.me.man.health === 0) {
 			// 	alert ("Вы проиграли!!!!!!");
@@ -183,12 +180,20 @@ window.SinglePlayerStrategy = (function (window) {
 				if (tower.coolDown > 0) {
 					tower.coolDown -- ;
 				} else {
-					this.state.bullets.push(
-               new Bullet (tower.direction,
+					if (tower.direction === "RIGHT"){
+            this.state.bullets.push(
+              new Bullet (tower.direction,
                 tower.x_position + tower.width + 1,
                 tower.y_position + tower.height/4 +1),
-					)
-					tower.coolDown = 50;
+            )
+					} else {
+            this.state.bullets.push(
+              new Bullet (tower.direction,
+                tower.x_position - 26, //TODO 26 - ширина пули + 1
+                tower.y_position + tower.height/4 +1),
+            )
+					}
+					tower.coolDown = TOWER_COOLDOWN;
 				}
 			})
 
@@ -197,12 +202,20 @@ window.SinglePlayerStrategy = (function (window) {
         if (tower.coolDown > 0) {
           tower.coolDown -- ;
         } else {
-          this.state.bullets.push(
-            new Bullet (tower.direction,
-              tower.x_position,
-              tower.y_position + tower.height/4 +1),
-          )
-          tower.coolDown = 50;
+          if (tower.direction === "RIGHT"){
+            this.state.bullets.push(
+              new Bullet (tower.direction,
+                tower.x_position + tower.width + 1,
+                tower.y_position + tower.height/4 +1),
+            )
+          } else {
+            this.state.bullets.push(
+              new Bullet (tower.direction,
+                tower.x_position - 26, //TODO 26 - ширина пули + 1
+                tower.y_position + tower.height/4 +1),
+            )
+          }
+          tower.coolDown = TOWER_COOLDOWN;
         }
       })
 
@@ -216,11 +229,10 @@ window.SinglePlayerStrategy = (function (window) {
 				}
 			}
 
-
 			// TODO оппонентом поставленные бомбы
-			// TODO монеты
+			// TODO монеты coolDown
 
-
+			// TODO сделать что то более адекватное
 			if (this.state.opponent){
         if (this.state.opponent.man.coolDown >= 0) {
           switch (this.state.opponent.man.coolDown) {
@@ -267,38 +279,29 @@ window.SinglePlayerStrategy = (function (window) {
 			this.fireSetNewGameState(this.state);
 		}
 
-
 		setRandomTower(){
 			this.state.opponent.towers.push(new Tower(1, 130, Math.random()*640))
 		}
-
 
     startGameLoop() {
 			this.interval = setInterval(() => this.gameLoop(), INTERVAL); //1000
     }
 
+		stopGameLoop() {
+			clearInterval(INTERVAL);
 
+		}
 
-
-
-    //
-		// stopGameLoop() {
-		// 	if (this.interval) {
-		// 		clearInterval(this.interval);
-		// 	}
-		// }
-    //
 		_pressed(name, data) {
 			return KEYS[name].some(k => data[k.toLowerCase()]);
 		}
-    //
-		// destroy() {
-		// 	super.destroy();
-    //
-		// 	this.stopGameLoop();
-		// }
-	}
 
+		destroy() {
+			super.destroy();
+
+			this.stopGameLoop();
+		}
+	}
 
 	return SinglePlayerStrategy;
 })(window);
