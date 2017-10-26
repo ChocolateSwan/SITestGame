@@ -5,9 +5,9 @@ window.Bomb = (function (window) {
   const BOMB_HEIGHT = 30;
 
 
-  const  {Unit} = window
+  const  {Sprite} = window
 
-  class Bomb extends  Unit {
+  class Bomb extends  Sprite {
 
     constructor (x_position, y_position, coolDown = 200) {
       super(x_position,

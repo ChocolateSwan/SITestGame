@@ -6,9 +6,9 @@ window.Coin = (function (window) {
   const COIN_COST = 10
 
 
-  const  {Unit} = window
+  const  {Sprite} = window
 
-  class Coin extends  Unit {
+  class Coin extends  Sprite {
 
     constructor (x_position, y_position, coolDown = 10) {
       super(x_position,

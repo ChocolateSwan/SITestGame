@@ -6,9 +6,9 @@ window.Tower = (function (window) {
   const TOWER_DAMAGE = 10;
   const TOWER_HEALTH = 100;
 
-  const  {Unit} = window
+  const  {Sprite} = window
 
-  class Tower extends  Unit {
+  class Tower extends  Sprite {
 
     constructor (coolDown, x_position, y_position, direction = "RIGHT") {
       super(x_position,

@@ -4,9 +4,9 @@ window.Base = (function (window) {
   const BASE_WIDTH = 110;
   const BASE_HEIGHT = 110;
 
-  const  {Unit} = window
+  const  {Sprite} = window
 
-  class Base extends  Unit {
+  class Base extends  Sprite {
     constructor (health = 3, x_position, y_position = 230) {
       super(x_position,
         y_position,

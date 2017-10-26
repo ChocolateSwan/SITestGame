@@ -1,7 +1,6 @@
 window.Player = (function (window) {
 
-  const  {Tower} = window
-  const  {Man} = window
+  const  {Unit} = window
   const  {Base} = window
   const {Bullet} = window
 
@@ -13,7 +12,7 @@ window.Player = (function (window) {
   class Player {
     constructor (name, baseOptions, manOptions) {
       this.name = name;
-      this.man = new Man(manOptions.manHealth,
+      this.unit = new Unit(manOptions.manHealth,
         manOptions.manXpos,
         manOptions.manYpos);
       this.towers = [];
@@ -26,28 +25,28 @@ window.Player = (function (window) {
 
     moveMan(direction){
       if (direction === UP){
-        this.man.goUp();
+        this.unit.goUp();
       }
       if (direction === DOWN){
-        this.man.goDown();
+        this.unit.goDown();
       }
       if (direction === RIGHT){
-        this.man.goRight();
+        this.unit.goRight();
       }
       if (direction === LEFT){
-        this.man.goLeft();
+        this.unit.goLeft();
       }
     }
 
     shootMan() {
-      if (this.man.direction === LEFT){
-        return new Bullet (this.man.direction,
-          this.man.x_position - 26, // TODO 26 - ширина пули + 1
-          this.man.y_position + this.man.height/2 + 1)
+      if (this.unit.direction === LEFT){
+        return new Bullet (this.unit.direction,
+          this.unit.x_position - 26, // TODO 26 - ширина пули + 1
+          this.unit.y_position + this.unit.height/2 + 1)
       } else { // в право
-        return new Bullet (this.man.direction,
-          this.man.x_position + this.man.width + 1,
-          this.man.y_position + this.man.height/2 + 1)
+        return new Bullet (this.unit.direction,
+          this.unit.x_position + this.unit.width + 1,
+          this.unit.y_position + this.unit.height/2 + 1)
       }
     }
   }

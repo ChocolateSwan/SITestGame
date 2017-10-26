@@ -1,6 +1,6 @@
-window.Unit = (function () {
-  // TODO адреса картинок
-  class Unit  {
+window.Sprite = (function () {
+
+  class Sprite  {
     constructor (x_position, y_position, srcOfImage, width, height) {
       this.x_position = x_position;
       this.y_position = y_position;
@@ -12,5 +12,5 @@ window.Unit = (function () {
 
     damaged (){};
   }
-  return Unit;
+  return Sprite;
 })(window);

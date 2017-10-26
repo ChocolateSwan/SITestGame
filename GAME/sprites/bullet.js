@@ -5,11 +5,11 @@ window.Bullet = (function (window) {
   const BULLET_HEIGHT = 25;
   const BULLET_DAMAGE = 10;
 
-  const  {Unit} = window
+  const  {Sprite} = window
 
 
-  // TODO damage
-  class Bullet extends Unit {
+  // TODO damage в конструкторе
+  class Bullet extends Sprite {
     constructor (direction, x_position, y_position, damage) {
       super(x_position,
         y_position,

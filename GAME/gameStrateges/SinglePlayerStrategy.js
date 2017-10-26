@@ -40,7 +40,7 @@ window.SinglePlayerStrategy = (function (window) {
 			};
 			this.state.opponent.towers.push(new Tower(1, 130, 120));
       this.state.opponent.towers.push(new Tower(1, 130, 400));
-			this.state.opponent.man.coolDown = 63;
+			this.state.opponent.unit.coolDown = 63;
       this.fireSetNewGameState(this.state);
 			this.startGameLoop();
 		}
@@ -65,10 +65,10 @@ window.SinglePlayerStrategy = (function (window) {
 			}
 			// Построить башню
 			if (this._pressed('TOWER', payload)) {
-				if (this.state.me.man.x_position >= modelWidth/2 && this.state.me.coins >= TOWER_COST){
+				if (this.state.me.unit.x_position >= modelWidth/2 && this.state.me.coins >= TOWER_COST){
           this.state.me.towers.push(new Tower(3,
-						this.state.me.man.x_position,
-						this.state.me.man.y_position,
+						this.state.me.unit.x_position,
+						this.state.me.unit.y_position,
 						"LEFT"))
 					this.state.me.coins -= TOWER_COST;
 				}
@@ -97,7 +97,7 @@ window.SinglePlayerStrategy = (function (window) {
 
 			// Пересечения пуль с моим юнитом;
       if (this.state && this.state.bullets) {
-        for(let collision of findCollisions(this.state.bullets,[this.state.me.man])) {
+        for(let collision of findCollisions(this.state.bullets,[this.state.me.unit])) {
           collision[0].damaged(collision[1]);
 					collision[1].damaged(collision[0]);
         }
@@ -106,7 +106,7 @@ window.SinglePlayerStrategy = (function (window) {
 
       // Установка бомбы
       if (this.state && this.state.me && this.state.opponent) {
-        for(let collision of findCollisions([this.state.me.man],[this.state.opponent.base])) {
+        for(let collision of findCollisions([this.state.me.unit],[this.state.opponent.base])) {
         	if (!this.state.opponent.bomb) {
             this.state.opponent.bomb = new Bomb(this.state.opponent.base.x_position + this.state.opponent.base.width/3,
 							this.state.opponent.base.y_position + this.state.opponent.base.height/3);
@@ -117,7 +117,6 @@ window.SinglePlayerStrategy = (function (window) {
       // пересечения пуль с башнями оппонента
       if (this.state && this.state.bullets) {
         for(let collision of findCollisions(this.state.bullets,this.state.opponent.towers)) {
-          console.log(collision);
           collision[0].damaged(collision[1]);
           collision[1].damaged(collision[0]);
         }
@@ -137,7 +136,7 @@ window.SinglePlayerStrategy = (function (window) {
 
       // обработка монеток
       if (this.state && this.state.coins) {
-        for(let collision of findCollisions(this.state.coins,[this.state.me.man])) {
+        for(let collision of findCollisions(this.state.coins,[this.state.me.unit])) {
           collision[0].collected = 1;
           this.state.me.coins += collision[0].cost;
         }
@@ -167,7 +166,7 @@ window.SinglePlayerStrategy = (function (window) {
       // TODO пересечение пули с пулями
 			// TODO пересечение юнита с оппонентом
 
-			// if (this.state.me.man.health === 0) {
+			// if (this.state.me.unit.health === 0) {
 			// 	alert ("Вы проиграли!!!!!!");
 			// }
       //
@@ -234,44 +233,44 @@ window.SinglePlayerStrategy = (function (window) {
 
 			// TODO сделать что то более адекватное
 			if (this.state.opponent){
-        if (this.state.opponent.man.coolDown >= 0) {
-          switch (this.state.opponent.man.coolDown) {
+        if (this.state.opponent.unit.coolDown >= 0) {
+          switch (this.state.opponent.unit.coolDown) {
 						case (48):
               this.state.opponent.moveMan("UP");
               this.state.bullets.push(
                 new Bullet ("RIGHT",
-                  this.state.opponent.man.x_position + this.state.opponent.man.width + 1,
-                  this.state.opponent.man.y_position + this.state.opponent.man.height/2 + 1),
+                  this.state.opponent.unit.x_position + this.state.opponent.unit.width + 1,
+                  this.state.opponent.unit.y_position + this.state.opponent.unit.height/2 + 1),
               )
               break;
 						case (32):
               this.state.opponent.moveMan("DOWN");
               this.state.bullets.push(
                 new Bullet ("RIGHT",
-                  this.state.opponent.man.x_position + this.state.opponent.man.width + 1,
-                  this.state.opponent.man.y_position + this.state.opponent.man.height/2 + 1),
+                  this.state.opponent.unit.x_position + this.state.opponent.unit.width + 1,
+                  this.state.opponent.unit.y_position + this.state.opponent.unit.height/2 + 1),
               )
               break;
             case (16):
               this.state.opponent.moveMan("DOWN");
               this.state.bullets.push(
                 new Bullet ("RIGHT",
-                  this.state.opponent.man.x_position + this.state.opponent.man.width + 1,
-                  this.state.opponent.man.y_position + this.state.opponent.man.height/2 + 1),
+                  this.state.opponent.unit.x_position + this.state.opponent.unit.width + 1,
+                  this.state.opponent.unit.y_position + this.state.opponent.unit.height/2 + 1),
               )
               break;
 						case (0):
 							this.state.opponent.moveMan("UP");
               this.state.bullets.push(
                 new Bullet ("RIGHT",
-                  this.state.opponent.man.x_position + this.state.opponent.man.width + 1,
-                  this.state.opponent.man.y_position + this.state.opponent.man.height/2 + 1),
+                  this.state.opponent.unit.x_position + this.state.opponent.unit.width + 1,
+                  this.state.opponent.unit.y_position + this.state.opponent.unit.height/2 + 1),
               )
               break;
         }
-          this.state.opponent.man.coolDown -= 1;
+          this.state.opponent.unit.coolDown -= 1;
         }else{
-          this.state.opponent.man.coolDown = 63;
+          this.state.opponent.unit.coolDown = 63;
 				}
 
 			}

@@ -1,31 +1,31 @@
-window.Man = (function (window) {
+window.Unit = (function (window) {
 
-  const MAN_IMAGE_PATH = "images/alienUnit.png"
-  const MAN_WIDTH = 50;
-  const MAN_HEIGHT = 50;
-  const MAN_DAMAGE = 10;
+  const UNIT_IMAGE_PATH = "images/alienUnit.png"
+  const UNIT_WIDTH = 50;
+  const UNIT_HEIGHT = 50;
+  const UNIT_DAMAGE = 10;
 
   const LEFT = "LEFT";
   const RIGHT = "RIGHT";
 
-  const  {Unit} = window;
+  const  {Sprite} = window;
 
   const modelWidth = 960;
   const modelHeight = 640;
 
   const SPEED = 5;
 
-  class Man extends  Unit {
-    constructor (health = 50, x_position, y_position = 260) {
+  class Unit extends  Sprite {
+    constructor (health = 100, x_position, y_position = 260) {
       super(x_position,
         y_position,
-        MAN_IMAGE_PATH,
-        MAN_WIDTH,
-        MAN_HEIGHT);
+        UNIT_IMAGE_PATH,
+        UNIT_WIDTH,
+        UNIT_HEIGHT);
       this.health= health;
       this.direction = LEFT;
       this.coolDown = 0;
-      this.damage = MAN_DAMAGE;
+      this.damage = UNIT_DAMAGE;
     }
 
     goDown(){
@@ -70,5 +70,5 @@ window.Man = (function (window) {
       this.coolDown = coolDown;
     }
   }
-    return Man;
+    return Unit;
   })(window);
