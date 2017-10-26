@@ -234,6 +234,17 @@ window.SinglePlayerStrategy = (function (window) {
 				}
 			}
 
+			//Обработка пуль, вышежших за пределы
+			this.state.bullets.forEach(blt => {
+				if (blt.x_position + blt.width < 0 || blt.x_position > modelWidth) {
+					blt.deleted = 1;
+				}
+			})
+
+      this.state.bullets = this.state.bullets.filter(blt => blt.deleted === 0);
+
+
+
 			// TODO оппонентом поставленные бомбы
 			// TODO монеты coolDown
 
