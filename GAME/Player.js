@@ -10,17 +10,18 @@ window.Player = (function (window) {
   const DOWN = "DOWN";
 
   class Player {
-    constructor (name, baseOptions, manOptions) {
+    constructor (name, baseOptions, manOptions, style) {
       this.name = name;
       this.unit = new Unit(manOptions.manHealth,
         manOptions.manXpos,
-        manOptions.manYpos);
+        manOptions.manYpos, style);
       this.towers = [];
       this.bomb = null;
       this.base = new Base (baseOptions.baseHealth,
         baseOptions.baseXpos,
         baseOptions.baseYpos);
       this.coins = 10;
+      this.style = style;
     }
 
     moveMan(direction){
@@ -42,11 +43,11 @@ window.Player = (function (window) {
       if (this.unit.direction === LEFT){
         return new Bullet (this.unit.direction,
           this.unit.x_position - 26, // TODO 26 - ширина пули + 1
-          this.unit.y_position + this.unit.height/2 + 1)
+          this.unit.y_position + this.unit.height/3 + 1)
       } else { // в право
         return new Bullet (this.unit.direction,
           this.unit.x_position + this.unit.width + 1,
-          this.unit.y_position + this.unit.height/2 + 1)
+          this.unit.y_position + this.unit.height/3 + 1)
       }
     }
   }

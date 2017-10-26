@@ -1,6 +1,9 @@
 window.Unit = (function (window) {
 
-  const UNIT_IMAGE_PATH = "images/alienUnit.png"
+  const UNIT_ALIEN_IMAGE_PATH_RIGHT_DIRECTION = "images/alienUnit_rightDirection.png";
+  const UNIT_ALIEN_IMAGE_PATH_LEFT_DIRECTION = "images/alienUnit_leftDirection.png";
+  const UNIT_MAN_IMAGE_PATH_RIGHT_DIRECTION = "images/spaceMan_rightDirection.png";
+  const UNIT_MAN_IMAGE_PATH_LEFT_DIRECTION = "images/spaceMan_leftDirection.png";
   const UNIT_WIDTH = 50;
   const UNIT_HEIGHT = 50;
   const UNIT_DAMAGE = 10;
@@ -16,16 +19,24 @@ window.Unit = (function (window) {
   const SPEED = 5;
 
   class Unit extends  Sprite {
-    constructor (health = 100, x_position, y_position = 260) {
+    constructor (health = 100, x_position, y_position = 260, type = "alien") {
       super(x_position,
         y_position,
-        UNIT_IMAGE_PATH,
+        type === "alien"? UNIT_ALIEN_IMAGE_PATH_RIGHT_DIRECTION: UNIT_MAN_IMAGE_PATH_LEFT_DIRECTION,
         UNIT_WIDTH,
         UNIT_HEIGHT);
       this.health= health;
       this.direction = LEFT;
       this.coolDown = 0;
       this.damage = UNIT_DAMAGE;
+      if (type === "alien"){
+        console.log(type);
+        this.srcImageRightDirection = UNIT_ALIEN_IMAGE_PATH_RIGHT_DIRECTION;
+        this.srcImageLeftDirection = UNIT_ALIEN_IMAGE_PATH_LEFT_DIRECTION;
+      } else {
+        this.srcImageRightDirection = UNIT_MAN_IMAGE_PATH_RIGHT_DIRECTION;
+        this.srcImageLeftDirection = UNIT_MAN_IMAGE_PATH_LEFT_DIRECTION;
+      }
     }
 
     goDown(){
@@ -48,6 +59,8 @@ window.Unit = (function (window) {
       if (this.x_position + this.width > modelWidth){
         this.x_position = modelWidth - this.width;
       }
+      // TODO сделать более адекватно
+      this.image.src = this.srcImageRightDirection;
     }
 
     goLeft(){
@@ -56,6 +69,8 @@ window.Unit = (function (window) {
       if (this.x_position < 0){
         this.x_position = 0;
         }
+      // TODO сделать более адекватно
+      this.image.src = this.srcImageLeftDirection;
     }
 
     // TODO обработка смерти

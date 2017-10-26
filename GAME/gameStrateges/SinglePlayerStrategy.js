@@ -35,8 +35,8 @@ window.SinglePlayerStrategy = (function (window) {
 				randomTowersCoolDown: SET_TOWERS_COOL_DOWN,
 				bullets: [],
 				coins: [],
-				me: new Player("My name", {baseXpos: 840}, {manXpos:750}),
-				opponent: new Player("Opponent", {baseXpos: 10}, {manXpos:190}),
+				me: new Player("My name",{baseXpos: 840}, {manXpos:750},"man"),
+				opponent: new Player("Opponent",{baseXpos: 10}, {manXpos:190}, "alien"),
 			};
 			this.state.opponent.towers.push(new Tower(1, 130, 120));
       this.state.opponent.towers.push(new Tower(1, 130, 400));
@@ -95,7 +95,7 @@ window.SinglePlayerStrategy = (function (window) {
 
 
 
-			// Пересечения пуль с моим юнитом;
+			// Пересечения пуль с моим юнитом
       if (this.state && this.state.bullets) {
         for(let collision of findCollisions(this.state.bullets,[this.state.me.unit])) {
           collision[0].damaged(collision[1]);
@@ -151,7 +151,7 @@ window.SinglePlayerStrategy = (function (window) {
         this.state.randomTowersCoolDown = SET_TOWERS_COOL_DOWN;
 			}
 
-      // пересечения пуль с моими башеями
+      // пересечения пуль с моими башнями
       if (this.state && this.state.bullets) {
         for(let collision of findCollisions(this.state.bullets,this.state.me.towers)) {
           collision[0].damaged(collision[1]);
@@ -263,7 +263,6 @@ window.SinglePlayerStrategy = (function (window) {
                 this.state.opponent.unit.y_position + this.state.opponent.unit.height/2 + 1),
             )
 					}
-					console.log(this.state.opponent.unit.coolDown);
           this.state.opponent.unit.coolDown -= 1;
         }else{
           this.state.opponent.unit.coolDown = 63;
