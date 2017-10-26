@@ -1,12 +1,12 @@
 window.GameScene = (function (window) {
   // TODO линия-разделитель поля на две половины
-  // TODO отрисовать жизни башенок
 
   //Scaling
   let scaleCoeff = window.innerHeight/modelHeight;
 
   const RED = "#F00";
   const BLUE = "#000dd4";
+  const BLACK = "black";
   const FONT = "italic 30pt Arial";
 
 	class GameScene {
@@ -46,6 +46,8 @@ window.GameScene = (function (window) {
 			const ctx = this.ctx;
 
       this.renderBackground(ctx);
+
+      this.renderHalfLine(ctx);
 
       this.renderBases(ctx);
 
@@ -117,6 +119,7 @@ window.GameScene = (function (window) {
             tower.y_position * scaleCoeff,
             tower.width * scaleCoeff,
             tower.height * scaleCoeff);
+          this.renderHealthOfTower(ctx, tower);
         })
       }
         if (this.state.me){
@@ -126,6 +129,7 @@ window.GameScene = (function (window) {
               tower.y_position*scaleCoeff,
               tower.width*scaleCoeff,
               tower.height*scaleCoeff);
+            this.renderHealthOfTower(ctx, tower);
           })
       }
     }
@@ -196,6 +200,32 @@ window.GameScene = (function (window) {
             coin.height*scaleCoeff);
         });
       }
+    }
+
+    renderHealthOfTower(ctx, tower){
+      ctx.strokeStyle = RED;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(tower.x_position*scaleCoeff, tower.y_position*scaleCoeff);
+      ctx.lineTo((tower.x_position*scaleCoeff + (tower.width*(tower.health)/100)*scaleCoeff),
+        tower.y_position*scaleCoeff);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.strokeStyle = BLACK;
+      ctx.lineWidth = 1;
+    }
+
+    renderHalfLine(ctx){
+      ctx.strokeStyle = "gray";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(modelWidth/2 * scaleCoeff, 0);
+      ctx.lineTo(modelWidth/2 * scaleCoeff,
+        modelHeight * scaleCoeff);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.strokeStyle = BLACK;
+      ctx.lineWidth = 1;
     }
 
 		destroy() {
