@@ -1,11 +1,11 @@
 window.GameScene = (function (window) {
 
-	// const Mediator = window.Mediator;
-
-	// Model coordinates
-
   //Scaling
   let scaleCoeff = window.innerHeight/modelHeight;
+
+  const RED = "#F00";
+  const BLUE = "#000dd4";
+  const FONT = "italic 30pt Arial";
 
 	class GameScene {
 
@@ -30,11 +30,9 @@ window.GameScene = (function (window) {
 
       scaleCoeff = window.innerHeight/modelHeight;
 
-
       this.canvas.height = window.innerHeight;
       this.canvas.width = modelWidth*scaleCoeff;
 
-      // scaleWidthCoeff = window.innerWidth/modelWidth;
     }
 
 		setState(state) {
@@ -90,7 +88,6 @@ window.GameScene = (function (window) {
           this.state.me.base.width*scaleCoeff,
           this.state.me.base.height*scaleCoeff);
       }
-
     }
 
 		renderMen(ctx){
@@ -144,9 +141,11 @@ window.GameScene = (function (window) {
     }
 
     renderText(ctx){
-      ctx.font = "italic 30pt Arial";
+		  // TODO масштабирование текста
+      // TODO убрать захардкоженые координаты
+      ctx.font = FONT;
       if (this.state.opponent) {
-          ctx.shadowColor = "#F00";
+          ctx.shadowColor = RED;
           ctx.shadowOffsetX = 5;
           ctx.shadowOffsetY = 5;
           ctx.shadowBlur = 5;
@@ -156,7 +155,7 @@ window.GameScene = (function (window) {
 
       }
       if (this.state.me) {
-        ctx.shadowColor = "#000dd4";
+        ctx.shadowColor = BLUE;
         ctx.shadowOffsetX = 5;
         ctx.shadowOffsetY = 5;
         ctx.shadowBlur = 5;
