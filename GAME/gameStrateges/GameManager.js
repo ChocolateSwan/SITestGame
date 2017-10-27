@@ -1,33 +1,23 @@
 window.GameManager = (function (window) {
-	const Mediator = window.Mediator;
-	const EVENTS = window.EVENTS;
 	const GameScene = window.GameScene;
 	const ControllersManager = window.ControllersManager;
 
-	const mediator = new Mediator;
 
 	class GameManager {
 
 		constructor(username, canvas, Strategy) {
-			console.log('GameManager.fn');
+			console.log('HELLO Im GameManager');
 
 			this.username = username;
-			this.strategy = new Strategy;
+			this.strategy = new Strategy(this.onNewState.bind(this), this.onFinishTheGame.bind(this));
 			this.scene = new GameScene(canvas);
 			this.controllers = new ControllersManager();
-      //
 
-			this.subscribe(EVENTS.START_THE_GAME, this.onStart.bind(this));
-			this.subscribe(EVENTS.SET_NEW_GAME_STATE, this.onNewState.bind(this));
+			console.log("ONSTART");
+      this.onStart();
+			this.strategy.onLoggedIn(this.username);
 
-      //
-			console.log("mediator.emit(EVENTS.WE_ARE_LOGGED_IN, {username})", username)
-			mediator.emit(EVENTS.WE_ARE_LOGGED_IN, {username});
 		}
-    //
-
-    //
-
 
 		onStart() {
 			console.log('GameManager.fn.onStart', arguments);
@@ -37,32 +27,27 @@ window.GameManager = (function (window) {
 			this.startGameLoop();
 		}
     //
-		onNewState(payload) {
-			// console.log('GameManager.fn.onNewState', payload);
-			this.state = payload.state;
+		onNewState(state) {
+			this.state = state;
 		}
-    //
+
 		startGameLoop() {
 			this.requestID = requestAnimationFrame(this.gameLoop.bind(this));
 		}
-    //
+
 		gameLoop() {
 			const controlsUpdates = this.controllers.diff();
-
-
 			if (Object.keys(controlsUpdates).some(k => controlsUpdates[k])) {
-				mediator.emit(EVENTS.NEXT_STEP_CONTROLS_PRESSED, controlsUpdates);
+				this.strategy.onNewCommand(controlsUpdates);
 			}
 
 			this.scene.setState(this.state);
-
-
 			this.scene.render();
 			this.requestID = requestAnimationFrame(this.gameLoop.bind(this));
 		}
 
-		onFinishTheGame(payload) {
-			console.log('GameManager.fn.onFinishTheGame', payload);
+		onFinishTheGame(message) {
+			console.log('GameManager.fn.onFinishTheGame');
 
 			if (this.requestID) {
 				cancelAnimationFrame(this.requestID);
@@ -72,26 +57,10 @@ window.GameManager = (function (window) {
 			this.scene.destroy();
 			this.controllers.destroy();
 
-			mediator.emit(EVENTS.OPEN_FINISH_VIEW, {results: payload.message});
+			alert(message)
 		}
-    //
-    //
-		subscribe(event, func) {
-			// this._subscribed.push({name: event, callback: callbackName});
-			mediator.on(event, func);
-		}
-    //
-		// unsubscribe(event) {
-		// 	this._subscribed = this._subscribed.filter(data => data.name !== event);
-		// 	mediator.off(event, this.mediatorCallback);
-		// }
-    //
-		// destroy() {
-		// 	this._subscribed.forEach(data => mediator.off(data.name, this.mediatorCallback));
-		// 	this._subscribed = null;
-		// }
-	}
 
+	}
 
 	return GameManager;
 })(window);

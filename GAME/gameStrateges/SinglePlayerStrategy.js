@@ -25,12 +25,14 @@ window.SinglePlayerStrategy = (function (window) {
 	};
 
 	class SinglePlayerStrategy extends GameStrategy {
-		constructor() {
+		constructor(funcSetState , funcFinishGame) {
 			super();
+			console.log(funcSetState);
+			this.funcSetState = funcSetState;
+			this.funcFinishGame = funcFinishGame;
 		}
 
 		onLoggedIn(payload) {
-			this.fireStartGame();
 			this.state = {
 				randomTowersCoolDown: SET_TOWERS_COOL_DOWN,
 				bullets: [],
@@ -41,7 +43,7 @@ window.SinglePlayerStrategy = (function (window) {
 			this.state.opponent.towers.push(new Tower(1, 130, 120));
       this.state.opponent.towers.push(new Tower(1, 130, 400));
 			this.state.opponent.unit.coolDown = 63;
-      this.fireSetNewGameState(this.state);
+      this.funcSetState(this.state);
 			this.startGameLoop();
 		}
 
@@ -173,13 +175,13 @@ window.SinglePlayerStrategy = (function (window) {
         this.state.me.base.health -= 1;
 			}
 
-			// if (this.state.me.base.health === 0) {
-			// 	alert ("Вы проиграли!!!!!!");
-			// }
-      //
-			// if (this.state.opponent.base.health === 0) {
-			// 	alert ("Вы победили!!!!");
-			// }
+			if (this.state.me.base.health === 0) {
+				this.funcFinishGame("Вы проиграли!!");
+			}
+
+			if (this.state.opponent.base.health === 0) {
+        this.funcFinishGame("Вы победили!!");
+			}
 
 			// файерболы оппонента
 			this.state.opponent.towers.forEach(tower => {
@@ -270,7 +272,7 @@ window.SinglePlayerStrategy = (function (window) {
 
 			}
 
-			this.fireSetNewGameState(this.state);
+			this.funcSetState(this.state);
 		}
 
 		setRandomTower(){
